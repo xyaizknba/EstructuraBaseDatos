@@ -1,0 +1,35 @@
+<html><body bgcolor="#D3D3D3"><h1>Select 1 Registro Postgres PHP</h1><h1>&lt;?php include("<a href="VarSql.htm">consultas.php</a>") ?&gt;</h1>$dbConnection = pg_connect("host=localhost dbname=ejemplo user=root password=");<br><br><br><pre>if($result_persona_1 = pg_query($dbConnection,$sSql_persona_1)){
+  if(pg_num_rows($result_persona_1)>0){
+     $row_persona_1[0] = pg_fetch_assoc($result_persona_1); ?>
+      &lt;table border="1"&gt;
+       &lt;tr&gt;&lt;td&gt;Persona :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["id_persona"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Nombre :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["nombre"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Clave :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["clave"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Correo :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["correo"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Numero :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["numero"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Telefono :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["telefono"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Comentario :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["comentario"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Piezas :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["piezas"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Soltero :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["soltero"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Auto :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["auto"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Ciudad :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["id_ciudad"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Fecha :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["fecha"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Fecha pago :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["fecha_pago"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Color :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["color"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Precio :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["precio"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Moneda :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["moneda"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Deporte :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["id_deporte"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Fecha contratacion :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["fecha_contratacion"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Empresa :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["id_empresa"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Fechainsercion :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["fechainsercion"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Fechaactualizacion :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["fechaactualizacion"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Fechaeliminacion :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["fechaeliminacion"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;Registrovisible :&lt;/td&gt;&lt;td&gt;&lt;?php echo $row_persona_1[0]["registrovisible"]?&gt;&lt;/td&gt;&lt;/tr&gt;
+      &lt;/table&gt;
+     &lt;?php
+  } else {
+     echo "&lt;h1&gt;No Hay datos&lt;/h1&gt;";
+  }
+  pg_free_result($result_persona_1);
+}
+<br><br><br><br></pre><p>pg_close($dbConnection);</p></body></html>

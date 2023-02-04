@@ -1,0 +1,306 @@
+<html><body bgcolor="#D3D3D3"><h1>Tabla PDF Jsp Persona</h1><pre>&lt;%@ include file="consultas.jsp" %&gt;&lt;%@ include file="conexion.jsp" %&gt;&lt;%@ include file="modelo.jsp" %&gt;&lt;%@ page import="java.util.*,XXXX.*" %&gt;&lt;%@page import="java.io.*,com.lowagie.text.*,com.lowagie.text.pdf.*" %&gt;&lt;%
+response.setContentType( "application/pdf" );
+
+Document document = new Document(PageSize.LETTER.rotate());
+ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+PdfWriter.getInstance( document, buffer );
+document.open();
+
+java.awt.Color bgDatPar = new java.awt.Color(255, 255, 255); java.awt.Color bgDatInpar = new java.awt.Color(245, 245, 220);
+java.awt.Color thBgcOlor = new java.awt.Color(255, 255, 224);
+Font fntTh = FontFactory.getFont(FontFactory.COURIER, 12, Font.BOLD, new java.awt.Color(0, 0, 0));
+Font fntTd = FontFactory.getFont(FontFactory.COURIER, 8, Font.BOLD, new java.awt.Color(0, 0, 0));
+
+java.util.List listaPersona = getDatosPersona(sSql_persona);
+java.util.Iterator itPersona = listaPersona.iterator();
+if(itPersona.hasNext()){ Persona oPersona = (Persona) itPersona.next();
+
+    Paragraph pDatos = new Paragraph("Datos Persona", FontFactory.getFont(FontFactory.COURIER, 20, Font.BOLD, new java.awt.Color(139, 0, 0)));
+    pDatos.setAlignment(Element.ALIGN_CENTER);
+    PdfPTable tblDatos = new PdfPTable(new float[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}); tblDatos.setSpacingBefore(10); tblDatos.setHeaderRows(1); tblDatos.setWidthPercentage(100);
+
+    PdfPCell celTh1 = new PdfPCell(new Paragraph("Persona", fntTh)); 
+     celTh1.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh1.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh2 = new PdfPCell(new Paragraph("Nombre", fntTh)); 
+     celTh2.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh2.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh3 = new PdfPCell(new Paragraph("Clave", fntTh)); 
+     celTh3.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh3.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh4 = new PdfPCell(new Paragraph("Correo", fntTh)); 
+     celTh4.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh4.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh5 = new PdfPCell(new Paragraph("Numero", fntTh)); 
+     celTh5.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh5.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh6 = new PdfPCell(new Paragraph("Telefono", fntTh)); 
+     celTh6.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh6.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh7 = new PdfPCell(new Paragraph("Comentario", fntTh)); 
+     celTh7.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh7.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh8 = new PdfPCell(new Paragraph("Piezas", fntTh)); 
+     celTh8.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh8.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh9 = new PdfPCell(new Paragraph("Soltero", fntTh)); 
+     celTh9.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh9.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh10 = new PdfPCell(new Paragraph("Auto", fntTh)); 
+     celTh10.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh10.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh11 = new PdfPCell(new Paragraph("Ciudad", fntTh)); 
+     celTh11.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh11.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh12 = new PdfPCell(new Paragraph("Fecha", fntTh)); 
+     celTh12.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh12.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh13 = new PdfPCell(new Paragraph("Fecha pago", fntTh)); 
+     celTh13.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh13.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh14 = new PdfPCell(new Paragraph("Color", fntTh)); 
+     celTh14.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh14.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh15 = new PdfPCell(new Paragraph("Precio", fntTh)); 
+     celTh15.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh15.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh16 = new PdfPCell(new Paragraph("Moneda", fntTh)); 
+     celTh16.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh16.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh17 = new PdfPCell(new Paragraph("Deporte", fntTh)); 
+     celTh17.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh17.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh18 = new PdfPCell(new Paragraph("Fecha contratacion", fntTh)); 
+     celTh18.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh18.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh19 = new PdfPCell(new Paragraph("Empresa", fntTh)); 
+     celTh19.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh19.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh20 = new PdfPCell(new Paragraph("Fechainsercion", fntTh)); 
+     celTh20.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh20.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh21 = new PdfPCell(new Paragraph("Fechaactualizacion", fntTh)); 
+     celTh21.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh21.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh22 = new PdfPCell(new Paragraph("Fechaeliminacion", fntTh)); 
+     celTh22.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh22.setBackgroundColor(thBgcOlor);
+
+    PdfPCell celTh23 = new PdfPCell(new Paragraph("Registrovisible", fntTh)); 
+     celTh23.setHorizontalAlignment(Element.ALIGN_CENTER);
+     celTh23.setBackgroundColor(thBgcOlor);
+
+    tblDatos.addCell(celTh1);
+    tblDatos.addCell(celTh2);
+    tblDatos.addCell(celTh3);
+    tblDatos.addCell(celTh4);
+    tblDatos.addCell(celTh5);
+    tblDatos.addCell(celTh6);
+    tblDatos.addCell(celTh7);
+    tblDatos.addCell(celTh8);
+    tblDatos.addCell(celTh9);
+    tblDatos.addCell(celTh10);
+    tblDatos.addCell(celTh11);
+    tblDatos.addCell(celTh12);
+    tblDatos.addCell(celTh13);
+    tblDatos.addCell(celTh14);
+    tblDatos.addCell(celTh15);
+    tblDatos.addCell(celTh16);
+    tblDatos.addCell(celTh17);
+    tblDatos.addCell(celTh18);
+    tblDatos.addCell(celTh19);
+    tblDatos.addCell(celTh20);
+    tblDatos.addCell(celTh21);
+    tblDatos.addCell(celTh22);
+    tblDatos.addCell(celTh23);
+
+    PdfPCell celTd1;
+    PdfPCell celTd2;
+    PdfPCell celTd3;
+    PdfPCell celTd4;
+    PdfPCell celTd5;
+    PdfPCell celTd6;
+    PdfPCell celTd7;
+    PdfPCell celTd8;
+    PdfPCell celTd9;
+    PdfPCell celTd10;
+    PdfPCell celTd11;
+    PdfPCell celTd12;
+    PdfPCell celTd13;
+    PdfPCell celTd14;
+    PdfPCell celTd15;
+    PdfPCell celTd16;
+    PdfPCell celTd17;
+    PdfPCell celTd18;
+    PdfPCell celTd19;
+    PdfPCell celTd20;
+    PdfPCell celTd21;
+    PdfPCell celTd22;
+    PdfPCell celTd23;
+
+    while(itPersona.hasNext()){ oPersona = (Persona) itPersona.next();
+
+        celTd1 = new PdfPCell(new Paragraph(oPersona.getIdpersona(), fntTd)); //id_persona
+        celTd2 = new PdfPCell(new Paragraph(oPersona.getNombre(), fntTd)); //nombre
+        celTd3 = new PdfPCell(new Paragraph(oPersona.getClave(), fntTd)); //clave
+        celTd4 = new PdfPCell(new Paragraph(oPersona.getCorreo(), fntTd)); //correo
+        celTd5 = new PdfPCell(new Paragraph(oPersona.getNumero(), fntTd)); //numero
+        celTd6 = new PdfPCell(new Paragraph(oPersona.getTelefono(), fntTd)); //telefono
+        celTd7 = new PdfPCell(new Paragraph(oPersona.getComentario(), fntTd)); //comentario
+        celTd8 = new PdfPCell(new Paragraph(oPersona.getPiezas(), fntTd)); //piezas
+        celTd9 = new PdfPCell(new Paragraph(oPersona.getSoltero(), fntTd)); //soltero
+        celTd10 = new PdfPCell(new Paragraph(oPersona.getAuto(), fntTd)); //auto
+        celTd11 = new PdfPCell(new Paragraph(oPersona.getIdciudad(), fntTd)); //id_ciudad
+        celTd12 = new PdfPCell(new Paragraph(oPersona.getFecha(), fntTd)); //fecha
+        celTd13 = new PdfPCell(new Paragraph(oPersona.getFechapago(), fntTd)); //fecha_pago
+        celTd14 = new PdfPCell(new Paragraph(oPersona.getColor(), fntTd)); //color
+        celTd15 = new PdfPCell(new Paragraph(oPersona.getPrecio(), fntTd)); //precio
+        celTd16 = new PdfPCell(new Paragraph(oPersona.getMoneda(), fntTd)); //moneda
+        celTd17 = new PdfPCell(new Paragraph(oPersona.getIddeporte(), fntTd)); //id_deporte
+        celTd18 = new PdfPCell(new Paragraph(oPersona.getFechacontratacion(), fntTd)); //fecha_contratacion
+        celTd19 = new PdfPCell(new Paragraph(oPersona.getIdempresa(), fntTd)); //id_empresa
+        celTd20 = new PdfPCell(new Paragraph(oPersona.getFechainsercion(), fntTd)); //fechainsercion
+        celTd21 = new PdfPCell(new Paragraph(oPersona.getFechaactualizacion(), fntTd)); //fechaactualizacion
+        celTd22 = new PdfPCell(new Paragraph(oPersona.getFechaeliminacion(), fntTd)); //fechaeliminacion
+        celTd23 = new PdfPCell(new Paragraph(oPersona.getRegistrovisible(), fntTd)); //registrovisible
+
+        if(iRen % 2 == 0){
+            celTd1.setBackgroundColor(bgDatPar);
+            celTd2.setBackgroundColor(bgDatPar);
+            celTd3.setBackgroundColor(bgDatPar);
+            celTd4.setBackgroundColor(bgDatPar);
+            celTd5.setBackgroundColor(bgDatPar);
+            celTd6.setBackgroundColor(bgDatPar);
+            celTd7.setBackgroundColor(bgDatPar);
+            celTd8.setBackgroundColor(bgDatPar);
+            celTd9.setBackgroundColor(bgDatPar);
+            celTd10.setBackgroundColor(bgDatPar);
+            celTd11.setBackgroundColor(bgDatPar);
+            celTd12.setBackgroundColor(bgDatPar);
+            celTd13.setBackgroundColor(bgDatPar);
+            celTd14.setBackgroundColor(bgDatPar);
+            celTd15.setBackgroundColor(bgDatPar);
+            celTd16.setBackgroundColor(bgDatPar);
+            celTd17.setBackgroundColor(bgDatPar);
+            celTd18.setBackgroundColor(bgDatPar);
+            celTd19.setBackgroundColor(bgDatPar);
+            celTd20.setBackgroundColor(bgDatPar);
+            celTd21.setBackgroundColor(bgDatPar);
+            celTd22.setBackgroundColor(bgDatPar);
+            celTd23.setBackgroundColor(bgDatPar);
+        } else {
+            celTd1.setBackgroundColor(bgDatInpar);
+            celTd2.setBackgroundColor(bgDatInpar);
+            celTd3.setBackgroundColor(bgDatInpar);
+            celTd4.setBackgroundColor(bgDatInpar);
+            celTd5.setBackgroundColor(bgDatInpar);
+            celTd6.setBackgroundColor(bgDatInpar);
+            celTd7.setBackgroundColor(bgDatInpar);
+            celTd8.setBackgroundColor(bgDatInpar);
+            celTd9.setBackgroundColor(bgDatInpar);
+            celTd10.setBackgroundColor(bgDatInpar);
+            celTd11.setBackgroundColor(bgDatInpar);
+            celTd12.setBackgroundColor(bgDatInpar);
+            celTd13.setBackgroundColor(bgDatInpar);
+            celTd14.setBackgroundColor(bgDatInpar);
+            celTd15.setBackgroundColor(bgDatInpar);
+            celTd16.setBackgroundColor(bgDatInpar);
+            celTd17.setBackgroundColor(bgDatInpar);
+            celTd18.setBackgroundColor(bgDatInpar);
+            celTd19.setBackgroundColor(bgDatInpar);
+            celTd20.setBackgroundColor(bgDatInpar);
+            celTd21.setBackgroundColor(bgDatInpar);
+            celTd22.setBackgroundColor(bgDatInpar);
+            celTd23.setBackgroundColor(bgDatInpar);
+        }
+
+        celTd1.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd2.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd3.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd4.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd5.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd6.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd7.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd8.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd9.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd10.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd11.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd12.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd13.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd14.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd15.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd16.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd17.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd18.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd19.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd20.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd21.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd22.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celTd23.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+        tblDatos.addCell(celTd1);
+        tblDatos.addCell(celTd2);
+        tblDatos.addCell(celTd3);
+        tblDatos.addCell(celTd4);
+        tblDatos.addCell(celTd5);
+        tblDatos.addCell(celTd6);
+        tblDatos.addCell(celTd7);
+        tblDatos.addCell(celTd8);
+        tblDatos.addCell(celTd9);
+        tblDatos.addCell(celTd10);
+        tblDatos.addCell(celTd11);
+        tblDatos.addCell(celTd12);
+        tblDatos.addCell(celTd13);
+        tblDatos.addCell(celTd14);
+        tblDatos.addCell(celTd15);
+        tblDatos.addCell(celTd16);
+        tblDatos.addCell(celTd17);
+        tblDatos.addCell(celTd18);
+        tblDatos.addCell(celTd19);
+        tblDatos.addCell(celTd20);
+        tblDatos.addCell(celTd21);
+        tblDatos.addCell(celTd22);
+        tblDatos.addCell(celTd23);
+
+
+      iRen++;
+    }
+
+   document.add(pDatos);
+   document.add(tblDatos);
+
+} else { 
+
+    Paragraph pNoHaydatos = new Paragraph(sNoDat ,FontFactory.getFont(FontFactory.COURIER, 40, Font.BOLD, new java.awt.Color(139, 0, 0)));
+    pNoHaydatos.setAlignment(Element.ALIGN_CENTER);
+    document.add(pNoHaydatos);
+
+}
+
+document.close();
+DataOutput output = new DataOutputStream( response.getOutputStream() );
+byte[] bytes = buffer.toByteArray();
+response.setContentLength(bytes.length);
+for( int i = 0; i &lt; bytes.length; i++ ){output.writeByte( bytes[i] );} %&gt;
+</pre></body></html>

@@ -1,0 +1,167 @@
+<html><body bgcolor="#D3D3D3"><h1>XLS PHP Persona</h1><pre>&lt;?php
+include("conexion.php");
+include("consultas.php");
+include("modelo.php");
+$aDatos_persona = getDatos_BaseDatos($dbHost,$dbUsrSel,$dbPwdSel,$dbBaseDatos,$sSql_persona );
+
+require __DIR__ . "/vendor/autoload.php";
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+$spreadsheet = new Spreadsheet();
+$sheet = $spreadsheet-&gt;getActiveSheet();
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B2")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizTitXls);
+$spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("2")-&gt;setRowHeight($iAltoTitXls);
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('B2')-&gt;getAlignment()-&gt;setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('B2')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('B2')-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($ColFondTitXls);
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('B2')-&gt;getFont()-&gt;getColor()-&gt;setARGB($ColFuenTitXls);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("B")-&gt;setWidth($aAnchoColsXls);  // id_persona
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('B')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("C")-&gt;setWidth($aAnchoColsXls);  // nombre
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('C')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("D")-&gt;setWidth($aAnchoColsXls);  // clave
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('D')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("E")-&gt;setWidth($aAnchoColsXls);  // correo
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('E')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("F")-&gt;setWidth($aAnchoColsXls);  // numero
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('F')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("G")-&gt;setWidth($aAnchoColsXls);  // telefono
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('G')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("H")-&gt;setWidth($aAnchoColsXls);  // comentario
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('H')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("I")-&gt;setWidth($aAnchoColsXls);  // piezas
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('I')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("J")-&gt;setWidth($aAnchoColsXls);  // soltero
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('J')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("K")-&gt;setWidth($aAnchoColsXls);  // auto
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('K')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("L")-&gt;setWidth($aAnchoColsXls);  // id_ciudad
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('L')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("M")-&gt;setWidth($aAnchoColsXls);  // fecha
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('M')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("N")-&gt;setWidth($aAnchoColsXls);  // fecha_pago
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('N')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("O")-&gt;setWidth($aAnchoColsXls);  // color
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('O')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("P")-&gt;setWidth($aAnchoColsXls);  // precio
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('P')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("Q")-&gt;setWidth($aAnchoColsXls);  // moneda
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('Q')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("R")-&gt;setWidth($aAnchoColsXls);  // id_deporte
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('R')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("S")-&gt;setWidth($aAnchoColsXls);  // fecha_contratacion
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('S')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("T")-&gt;setWidth($aAnchoColsXls);  // id_empresa
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('T')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("U")-&gt;setWidth($aAnchoColsXls);  // fechainsercion
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('U')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("V")-&gt;setWidth($aAnchoColsXls);  // fechaactualizacion
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('V')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("W")-&gt;setWidth($aAnchoColsXls);  // fechaeliminacion
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('W')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("X")-&gt;setWidth($aAnchoColsXls);  // registrovisible
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('X')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+
+if(count($aDatos_persona) &gt; 0){
+    $sheet-&gt;setCellValue("B3", "Persona");
+    $sheet-&gt;setCellValue("C3", "Nombre");
+    $sheet-&gt;setCellValue("D3", "Clave");
+    $sheet-&gt;setCellValue("E3", "Correo");
+    $sheet-&gt;setCellValue("F3", "Numero");
+    $sheet-&gt;setCellValue("G3", "Telefono");
+    $sheet-&gt;setCellValue("H3", "Comentario");
+    $sheet-&gt;setCellValue("I3", "Piezas");
+    $sheet-&gt;setCellValue("J3", "Soltero");
+    $sheet-&gt;setCellValue("K3", "Auto");
+    $sheet-&gt;setCellValue("L3", "Ciudad");
+    $sheet-&gt;setCellValue("M3", "Fecha");
+    $sheet-&gt;setCellValue("N3", "Fecha pago");
+    $sheet-&gt;setCellValue("O3", "Color");
+    $sheet-&gt;setCellValue("P3", "Precio");
+    $sheet-&gt;setCellValue("Q3", "Moneda");
+    $sheet-&gt;setCellValue("R3", "Deporte");
+    $sheet-&gt;setCellValue("S3", "Fecha contratacion");
+    $sheet-&gt;setCellValue("T3", "Empresa");
+    $sheet-&gt;setCellValue("U3", "Fechainsercion");
+    $sheet-&gt;setCellValue("V3", "Fechaactualizacion");
+    $sheet-&gt;setCellValue("W3", "Fechaeliminacion");
+    $sheet-&gt;setCellValue("X3", "Registrovisible");
+
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:X3")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:X3")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($ColFondLblCol);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:X3")-&gt;getFont()-&gt;getColor()-&gt;setARGB($ColFntLblColXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:X3")-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("3")-&gt;setRowHeight($iAltoLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;freezePane('A4');
+    $sheet-&gt;mergeCells("B2:X2");
+
+    $sheet-&gt;setCellValue("B2", "Datos Tabla Persona");
+    foreach($aDatos_persona as $reg):
+     $sRefCelCol = "B".$iRenDatXls.":X".$iRenDatXls;
+     if($iRenDatXls % 2 == 0){
+         $spreadsheet-&gt;getActiveSheet()-&gt;getStyle($sRefCelCol)-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsPar);
+     } else {
+         $spreadsheet-&gt;getActiveSheet()-&gt;getStyle($sRefCelCol)-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+     }
+     $spreadsheet-&gt;getActiveSheet()-&gt;getStyle($sRefCelCol)-&gt;getFont()-&gt;getColor()-&gt;setARGB($sColDatXls);
+
+       $sheet-&gt;setCellValueByColumnAndRow(2, $iRenDatXls, $reg["id_persona"]);
+       $sheet-&gt;setCellValueByColumnAndRow(3, $iRenDatXls, $reg["nombre"]);
+       $sheet-&gt;setCellValueByColumnAndRow(4, $iRenDatXls, $reg["clave"]);
+       $sheet-&gt;setCellValueByColumnAndRow(5, $iRenDatXls, $reg["correo"]);
+       $sheet-&gt;setCellValueByColumnAndRow(6, $iRenDatXls, $reg["numero"]);
+       $sheet-&gt;setCellValueByColumnAndRow(7, $iRenDatXls, $reg["telefono"]);
+       $sheet-&gt;setCellValueByColumnAndRow(8, $iRenDatXls, $reg["comentario"]);
+       $sheet-&gt;setCellValueByColumnAndRow(9, $iRenDatXls, $reg["piezas"]);
+       $sheet-&gt;setCellValueByColumnAndRow(10, $iRenDatXls, $reg["soltero"]);
+       $sheet-&gt;setCellValueByColumnAndRow(11, $iRenDatXls, $reg["auto"]);
+       $sheet-&gt;setCellValueByColumnAndRow(12, $iRenDatXls, $reg["id_ciudad"]);
+       $sheet-&gt;setCellValueByColumnAndRow(13, $iRenDatXls, $reg["fecha"]);
+       $sheet-&gt;setCellValueByColumnAndRow(14, $iRenDatXls, $reg["fecha_pago"]);
+       $sheet-&gt;setCellValueByColumnAndRow(15, $iRenDatXls, $reg["color"]);
+       $sheet-&gt;setCellValueByColumnAndRow(16, $iRenDatXls, $reg["precio"]);
+       $sheet-&gt;setCellValueByColumnAndRow(17, $iRenDatXls, $reg["moneda"]);
+       $sheet-&gt;setCellValueByColumnAndRow(18, $iRenDatXls, $reg["id_deporte"]);
+       $sheet-&gt;setCellValueByColumnAndRow(19, $iRenDatXls, $reg["fecha_contratacion"]);
+       $sheet-&gt;setCellValueByColumnAndRow(20, $iRenDatXls, $reg["id_empresa"]);
+       $sheet-&gt;setCellValueByColumnAndRow(21, $iRenDatXls, $reg["fechainsercion"]);
+       $sheet-&gt;setCellValueByColumnAndRow(22, $iRenDatXls, $reg["fechaactualizacion"]);
+       $sheet-&gt;setCellValueByColumnAndRow(23, $iRenDatXls, $reg["fechaeliminacion"]);
+       $sheet-&gt;setCellValueByColumnAndRow(24, $iRenDatXls, $reg["registrovisible"]);
+      $iRenDatXls++;
+    endforeach;
+} else {
+    $sheet-&gt;mergeCells("B2:X2");
+    $sheet-&gt;setCellValue("B2", $sNoDat);
+}
+$writer = new Xlsx($spreadsheet);
+$writer-&gt;save('DatosPersona.xlsx');
+header("Location: DatosPersona.xlsx");
+?&gt;
+</pre></body></html>

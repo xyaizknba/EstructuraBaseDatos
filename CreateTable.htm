@@ -1,0 +1,26 @@
+<html><head><style> .nt{font-weight:bolder;font-size:x-large;color:yellow;background-color:#00008B} .nn{background-color:#800000;color:yellow;font-size:x-large} </style></head><body bgcolor="#D3D3D3"><h1>Create Table Base de Datos <b class="nt">ejemplo</b></h1><pre>CREATE TABLE IF NOT EXISTS <b class="nt">persona</b> (
+   id_persona INT(6) AUTO_INCREMENT PRIMARY KEY <span class="nn">NOT NULL</span>,
+   nombre VARCHAR(100) DEFAULT NULL,
+   clave VARCHAR(100) DEFAULT NULL,
+   correo VARCHAR(100) DEFAULT NULL,
+   numero DECIMAL(15)  DEFAULT NULL,
+   telefono VARCHAR(100) DEFAULT NULL,
+   comentario VARCHAR(655) DEFAULT NULL,
+   piezas INT(11)  DEFAULT NULL,
+   soltero TINYINT(4)  DEFAULT NULL,
+   auto TINYINT(4)  DEFAULT NULL,
+   id_ciudad INT(11)  DEFAULT NULL,
+   fecha DATE DEFAULT NULL,
+   fecha_pago DATE DEFAULT NULL,
+   color VARCHAR(10) DEFAULT NULL,
+   precio DECIMAL(13)  DEFAULT NULL,
+   moneda FLOAT(12) DEFAULT NULL,
+   id_deporte INT(11)  DEFAULT NULL,
+   fecha_contratacion DATETIME DEFAULT NULL,
+   id_empresa INT(11)  DEFAULT NULL,
+   fechainsercion DATETIME DEFAULT NULL,
+   fechaactualizacion DATETIME DEFAULT NULL,
+   fechaeliminacion DATETIME DEFAULT NULL,
+   registrovisible TINYINT(4)  DEFAULT NULL
+);
+</pre></body></html>

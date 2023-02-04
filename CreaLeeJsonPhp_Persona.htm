@@ -1,0 +1,101 @@
+<html><head><style> .nt{font-weight:bolder;font-size:x-large;color:yellow;background-color:#00008B} </style></head><body bgcolor="#D3D3D3"><h1>Crear y Leer Json Persona</h1><h3><b class="nt">JsonPersona.php</b></h3><pre>&lt;?php
+header('Content-Type: application/json; charset=utf-8');
+include("conexion.php");
+include("consultas.php");
+include("modelo.php");
+$aDatos_persona = getDatos_BaseDatos($dbHost,$dbUsrSel,$dbPwdSel,$dbBaseDatos,$sSql_persona);
+echo json_encode($aDatos_persona);
+?&gt;
+
+
+</pre><hr color="blue"><pre>&lt;html&gt;
+&lt;head&gt;
+ &lt;title&gt;&lt;/title&gt;
+ &lt;style&gt;
+ .trP {color:red}
+ .trI {color:blue}
+ &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;?php
+define('JSON', 'http://localhost/<b class="nt">JsonPersona.php</b>');
+$iRen = 1;
+if($data = @file_get_contents(JSON)){
+  $datosPersona = json_decode($data, true);
+  if($data = file_get_contents(JSON)) {
+    $datosPersona = json_decode($data, true);
+    if(count($datosPersona) &gt; 0) { ?&gt;
+     &lt;div align="center"&gt;
+       &lt;h1&gt;Datos Persona&lt;/h1&gt;
+       &lt;table border="1"&gt;
+        &lt;tr&gt;
+        &lt;th&gt;Persona&lt;/th&gt;
+        &lt;th&gt;Nombre&lt;/th&gt;
+        &lt;th&gt;Clave&lt;/th&gt;
+        &lt;th&gt;Correo&lt;/th&gt;
+        &lt;th&gt;Numero&lt;/th&gt;
+        &lt;th&gt;Telefono&lt;/th&gt;
+        &lt;th&gt;Comentario&lt;/th&gt;
+        &lt;th&gt;Piezas&lt;/th&gt;
+        &lt;th&gt;Soltero&lt;/th&gt;
+        &lt;th&gt;Auto&lt;/th&gt;
+        &lt;th&gt;Ciudad&lt;/th&gt;
+        &lt;th&gt;Fecha&lt;/th&gt;
+        &lt;th&gt;Fecha pago&lt;/th&gt;
+        &lt;th&gt;Color&lt;/th&gt;
+        &lt;th&gt;Precio&lt;/th&gt;
+        &lt;th&gt;Moneda&lt;/th&gt;
+        &lt;th&gt;Deporte&lt;/th&gt;
+        &lt;th&gt;Fecha contratacion&lt;/th&gt;
+        &lt;th&gt;Empresa&lt;/th&gt;
+        &lt;th&gt;Fechainsercion&lt;/th&gt;
+        &lt;th&gt;Fechaactualizacion&lt;/th&gt;
+        &lt;th&gt;Fechaeliminacion&lt;/th&gt;
+        &lt;th&gt;Registrovisible&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;?php foreach ($datosPersona  as $reg) { ?&gt;
+          &lt;tr class="&lt;?php echo ($iRen % 2 == 0 ? "trP" : "trI") ?&gt;"&gt;
+     &lt;td align="center"&gt;&lt;?php echo (strlen($reg["id_persona"])&gt;0 ? $reg["id_persona"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td&gt;&lt;?php echo (strlen($reg["nombre"])&gt;0 ? $reg["nombre"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td&gt;&lt;?php echo (strlen($reg["clave"])&gt;0 ? $reg["clave"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td&gt;&lt;?php echo (strlen($reg["correo"])&gt;0 ? $reg["correo"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td align="center"&gt;&lt;?php echo (strlen($reg["numero"])&gt;0 ? $reg["numero"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td&gt;&lt;?php echo (strlen($reg["telefono"])&gt;0 ? $reg["telefono"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td&gt;&lt;?php echo (strlen($reg["comentario"])&gt;0 ? $reg["comentario"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td align="center"&gt;&lt;?php echo (strlen($reg["piezas"])&gt;0 ? $reg["piezas"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td align="center"&gt;&lt;?php echo (strlen($reg["soltero"])&gt;0 ? $reg["soltero"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td align="center"&gt;&lt;?php echo (strlen($reg["auto"])&gt;0 ? $reg["auto"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td align="center"&gt;&lt;?php echo (strlen($reg["id_ciudad"])&gt;0 ? $reg["id_ciudad"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td align="center"&gt;&lt;?php echo (strlen($reg["fecha"])&gt;0 ? $reg["fecha"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td align="center"&gt;&lt;?php echo (strlen($reg["fecha_pago"])&gt;0 ? $reg["fecha_pago"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td&gt;&lt;?php echo (strlen($reg["color"])&gt;0 ? $reg["color"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td align="center"&gt;&lt;?php echo (strlen($reg["precio"])&gt;0 ? $reg["precio"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td align="center"&gt;&lt;?php echo (strlen($reg["moneda"])&gt;0 ? $reg["moneda"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td align="center"&gt;&lt;?php echo (strlen($reg["id_deporte"])&gt;0 ? $reg["id_deporte"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td align="center"&gt;&lt;?php echo (strlen($reg["fecha_contratacion"])&gt;0 ? $reg["fecha_contratacion"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td align="center"&gt;&lt;?php echo (strlen($reg["id_empresa"])&gt;0 ? $reg["id_empresa"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td align="center"&gt;&lt;?php echo (strlen($reg["fechainsercion"])&gt;0 ? $reg["fechainsercion"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td align="center"&gt;&lt;?php echo (strlen($reg["fechaactualizacion"])&gt;0 ? $reg["fechaactualizacion"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td align="center"&gt;&lt;?php echo (strlen($reg["fechaeliminacion"])&gt;0 ? $reg["fechaeliminacion"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+     &lt;td align="center"&gt;&lt;?php echo (strlen($reg["registrovisible"])&gt;0 ? $reg["registrovisible"] :"&lt;br /&gt;")?&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;?php $iRen++; } ?&gt;
+       &lt;/table&gt;
+     &lt;/div&gt;
+  &lt;?php
+    } else { ?&gt;
+    &lt;p&gt;No hay datos&lt;/p&gt;
+    &lt;?php
+    }
+  } else { ?&gt;
+    &lt;p&gt;No Hay Datos&lt;/p&gt;
+&lt;?php
+  }
+} else { ?&gt;
+  &lt;p&gt;Error al Cargar los Datos&lt;/p&gt;
+&lt;?php
+}
+?&gt;
+ &lt;/body&gt;
+&lt;/html&gt;
+</pre></body></html>

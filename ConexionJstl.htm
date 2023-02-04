@@ -1,0 +1,6 @@
+<html><body bgcolor="#D3D3D3" oncontextmenu="return false"><h4>Conexion JSP - JSTL</h4><pre>&lt;c:set var="dbUrl" value="jdbc:mysql://localhost/ejemplo" scope="page" /&gt;
+&lt;c:set var="dbUsr" value="root" scope="page" /&gt;
+&lt;c:set var="dbPwd" value="" scope="page" /&gt;
+&lt;c:set var="dbDrv" value="com.mysql.jdbc.Driver" scope="page" /&gt;
+&lt;sql:setDataSource var="dbConnection" scope="application" driver="${dbDrv}" url="${dbUrl}" user="${dbUsr}" password="${dbPwd}" /&gt;
+</pre></body></html>

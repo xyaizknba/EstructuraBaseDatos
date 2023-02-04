@@ -1,0 +1,36 @@
+<html><style> .nt{font-weight:bolder;font-size:x-large;color:yellow;background-color:#00008B} .cDte{background-color:#800000;color:yellow;font-size:large;font-weight:bolder} .cReq{color:red;font-size:large;font-weight:bolder} </style><body bgcolor="#D3D3D3"><h1>INSERT Pdo1 <span class="nt">Persona</span></h1><pre>&lt;?php
+ $iRegInsertados = 0;
+ try {
+  $dbh = new PDO("mysql:host=$dbHost;dbname=$dbBaseDatos",$dbUsrIns,$dbPwdIns);
+  if($dbh){
+    $sSql = "INSERT INTO <span class="nt">persona</span>(nombre, clave, correo, numero, telefono, comentario, piezas, soltero, auto, id_ciudad, fecha, fecha_pago, color, precio, moneda, id_deporte, fecha_contratacion, id_empresa, fechainsercion, fechaactualizacion, fechaeliminacion, registrovisible) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sth = $dbh-&gt;prepare($sSql);
+    $sth-&gt;bindValue(1, $_POST["nombre"]);
+    $sth-&gt;bindValue(2, $_POST["clave"]);
+    $sth-&gt;bindValue(3, $_POST["correo"]);
+    $sth-&gt;bindValue(4, $_POST["numero"]);
+    $sth-&gt;bindValue(5, $_POST["telefono"]);
+    $sth-&gt;bindValue(6, $_POST["comentario"]);
+    $sth-&gt;bindValue(7, $_POST["piezas"]);
+    $sth-&gt;bindValue(8, $_POST["soltero"]);
+    $sth-&gt;bindValue(9, $_POST["auto"]);
+    $sth-&gt;bindValue(10, $_POST["id_ciudad"]);
+    $sth-&gt;bindValue(11, $_POST["fecha"]);
+    $sth-&gt;bindValue(12, $_POST["fecha_pago"]);
+    $sth-&gt;bindValue(13, $_POST["color"]);
+    $sth-&gt;bindValue(14, $_POST["precio"]);
+    $sth-&gt;bindValue(15, $_POST["moneda"]);
+    $sth-&gt;bindValue(16, $_POST["id_deporte"]);
+    $sth-&gt;bindValue(17, $_POST["fecha_contratacion"]);
+    $sth-&gt;bindValue(18, $_POST["id_empresa"]);
+    $sth-&gt;bindValue(19, $_POST["fechainsercion"]);
+    $sth-&gt;bindValue(20, $_POST["fechaactualizacion"]);
+    $sth-&gt;bindValue(21, $_POST["fechaeliminacion"]);
+    $sth-&gt;bindValue(22, $_POST["registrovisible"]);
+
+    $sth->execute();
+    $iRegInsertados = $sth->rowCount();
+  }
+ }catch(PDOException $e){ $iRegInsertados = 0; }
+ echo $iRegInsertados;
+?&gt;

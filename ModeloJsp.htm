@@ -1,0 +1,72 @@
+<html><head></head><body bgcolor="#D3D3D3"><h1>Modelo JSP</h1><pre>&lt;%!
+
+String sCampoOrdBy="";
+final String sUrlImgOrdAsc = "asc.jpg";
+final String sUrlImgOrdDesc = "desc.jpg";
+final String sNumRegVer = "Numero de Registros a Ver";
+final String sOrdenarPor = "Ordenar Por";
+final String sNoDat = "No Hay Datos";
+final String sBtnOrdenar = "Ordenar";
+final String[] sOrdenBy = {"ASC","DESC"};
+final String[] sOrdenByLbl = {"Ascendente","Descendente"};
+int iNumCamOrd=0;
+int iRen=0;
+int iNumVerRegOrg = 200;
+boolean blnCampOrdSel = false;
+boolean blnOrdBySel = false;
+public int Numero(String N){int n=0;if(N.length()&gt;0){try{n=Integer.parseInt(N);}catch(NumberFormatException e){}}return n;}
+public java.sql.Connection getConnection(){
+  java.sql.Connection cn=null;
+  try {
+    Class.forName(sClass);
+    cn = java.sql.DriverManager.getConnection(dbUrl,dbUsr,dbPwd);
+  }
+  catch(ClassNotFoundException clsNotF){}
+  finally {
+   return cn;
+  }
+}
+
+public java.util.List getDatosPersona(String sSQL) throws java.sql.SQLException {
+  java.util.List listaPersona = new ArrayList();
+  java.sql.Connection dbConnection = getConnection();
+  java.sql.Statement dbStatement = dbConnection.createStatement();
+  java.sql.ResultSet resultados = dbStatement.executeQuery(sSQL);
+  while(resultados.next()){
+   Persona oPersona = new Persona();
+   oPersona.setIdpersona(resultados.getString("id_persona"));
+   oPersona.setNombre(resultados.getString("nombre"));
+   oPersona.setClave(resultados.getString("clave"));
+   oPersona.setCorreo(resultados.getString("correo"));
+   oPersona.setNumero(resultados.getString("numero"));
+   oPersona.setTelefono(resultados.getString("telefono"));
+   oPersona.setComentario(resultados.getString("comentario"));
+   oPersona.setPiezas(resultados.getString("piezas"));
+   oPersona.setSoltero(resultados.getString("soltero"));
+   oPersona.setAuto(resultados.getString("auto"));
+   oPersona.setIdciudad(resultados.getString("id_ciudad"));
+   oPersona.setFecha(resultados.getString("fecha"));
+   oPersona.setFechapago(resultados.getString("fecha_pago"));
+   oPersona.setColor(resultados.getString("color"));
+   oPersona.setPrecio(resultados.getString("precio"));
+   oPersona.setMoneda(resultados.getString("moneda"));
+   oPersona.setIddeporte(resultados.getString("id_deporte"));
+   oPersona.setFechacontratacion(resultados.getString("fecha_contratacion"));
+   oPersona.setIdempresa(resultados.getString("id_empresa"));
+   oPersona.setFechainsercion(resultados.getString("fechainsercion"));
+   oPersona.setFechaactualizacion(resultados.getString("fechaactualizacion"));
+   oPersona.setFechaeliminacion(resultados.getString("fechaeliminacion"));
+   oPersona.setRegistrovisible(resultados.getString("registrovisible"));
+   listaPersona.add(oPersona);
+  }
+  resultados.close();
+  dbStatement.close();
+  dbConnection.close();
+  return listaPersona;
+}
+
+final String[] aNomCampos_persona = {"id_persona","nombre","clave","correo","numero","telefono","comentario","piezas","soltero","auto","id_ciudad","fecha","fecha_pago","color","precio","moneda","id_deporte","fecha_contratacion","id_empresa","fechainsercion","fechaactualizacion","fechaeliminacion","registrovisible"};
+final String[] aLblCam_persona = {"Persona","Nombre","Clave","Correo","Numero","Telefono","Comentario","Piezas","Soltero","Auto","Ciudad","Fecha","Fecha pago","Color","Precio","Moneda","Deporte","Fecha contratacion","Empresa","Fechainsercion","Fechaactualizacion","Fechaeliminacion","Registrovisible"};
+
+%&gt;
+</pre></body></html>

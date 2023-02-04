@@ -1,0 +1,25 @@
+<html><style> .nt{font-weight:bolder;font-size:x-large;color:yellow;background-color:#00008B} .cDte{background-color:#800000;color:yellow;font-size:large;font-weight:bolder} .cReq{color:red;font-size:large;font-weight:bolder} </style><body bgcolor="#D3D3D3"><h1>INSERT JSTL <span class="nt">Persona</span></h1><pre>  &lt;sql:update dataSource="${dbConnection}" var="iInsertado"&gt;
+    INSERT INTO <span class="nt">persona</span>(nombre, clave, correo, numero, telefono, comentario, piezas, soltero, auto, id_ciudad, fecha, fecha_pago, color, precio, moneda, id_deporte, fecha_contratacion, id_empresa, fechainsercion, fechaactualizacion, fechaeliminacion, registrovisible) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    &lt;sql:param value="${param.nombre}" /&gt;
+    &lt;sql:param value="${param.clave}" /&gt;
+    &lt;sql:param value="${param.correo}" /&gt;
+    &lt;sql:param value="${param.numero}" /&gt;
+    &lt;sql:param value="${param.telefono}" /&gt;
+    &lt;sql:param value="${param.comentario}" /&gt;
+    &lt;sql:param value="${param.piezas}" /&gt;
+    &lt;sql:param value="${param.soltero}" /&gt;
+    &lt;sql:param value="${param.auto}" /&gt;
+    &lt;sql:param value="${param.id_ciudad}" /&gt;
+    &lt;sql:<span title="Ingresa una Fecha" class="cDte">dateParam</span> value="${param.fecha}" /&gt;
+    &lt;sql:<span title="Ingresa una Fecha" class="cDte">dateParam</span> value="${param.fecha_pago}" /&gt;
+    &lt;sql:param value="${param.color}" /&gt;
+    &lt;sql:param value="${param.precio}" /&gt;
+    &lt;sql:param value="${param.moneda}" /&gt;
+    &lt;sql:param value="${param.id_deporte}" /&gt;
+    &lt;sql:<span title="Ingresa una Fecha" class="cDte">dateParam</span> value="${param.fecha_contratacion}" /&gt;
+    &lt;sql:param value="${param.id_empresa}" /&gt;
+    &lt;sql:<span title="Ingresa una Fecha" class="cDte">dateParam</span> value="${param.fechainsercion}" /&gt;
+    &lt;sql:<span title="Ingresa una Fecha" class="cDte">dateParam</span> value="${param.fechaactualizacion}" /&gt;
+    &lt;sql:<span title="Ingresa una Fecha" class="cDte">dateParam</span> value="${param.fechaeliminacion}" /&gt;
+    &lt;sql:param value="${param.registrovisible}" /&gt;
+  &lt;/sql:update&gt;

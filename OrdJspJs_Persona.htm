@@ -1,0 +1,118 @@
+<html><body bgcolor="#D3D3D3"><h1>Ordenamiento Flecha JSP Js Persona</h1><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+&lt;link rel="stylesheet" href="estilo.css" style="text/css" /&gt;
+&lt;script&gt;
+function Ordenar(i,o,x){if(document.getElementById(x)!==null && (!isNaN(i) && !isNaN(o)) && (o===1 || o===2) && (Number(i) &gt; 0)){var peticion=new XMLHttpRequest();peticion.open("GET","<b>personaOrdJsp.jsp</b>?c="+i+"&o="+(o===1?"ASC":"DESC"));peticion.onreadystatechange=function(){if(peticion.readyState==4 && peticion.status==200){document.getElementById(x).innerHTML=peticion.responseText;}};peticion.send(null);}}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+ &lt;div align="center" id="dOrd"&gt;
+  &lt;%@ include file="<b>personaOrdJsp.jsp</b>" %&gt;
+ &lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><h1>personaOrdJsp.php</h1><pre>&lt;%@ page errorPage="error.jsp" %&gt;
+&lt;%@ include file="conexion.jsp" %&gt;
+&lt;%@ include file="<a href="D:\xampp\htdocs\DbEstructura\ModeloJsp.htm"><b>modelo.jsp</b></a>" %&gt;
+&lt;%@ include file="consultas.jsp" %&gt;
+&lt;%@ page import="java.util.*,java.sql.*,XXXX.*" %&gt;
+&lt;%
+String sSqlOrderBy = sSql_persona;
+if((request.getParameter("c") != null && request.getParameter("c").length() &gt; 0) && (request.getParameter("o") != null && request.getParameter("o").length() &gt; 0)){
+  iNumCamOrd = Numero(request.getParameter("c"));
+  if(iNumCamOrd &gt; 0){
+    switch(iNumCamOrd){
+      case 1:{sCampoOrdBy="id_persona";}break;
+      case 2:{sCampoOrdBy="nombre";}break;
+      case 3:{sCampoOrdBy="clave";}break;
+      case 4:{sCampoOrdBy="correo";}break;
+      case 5:{sCampoOrdBy="numero";}break;
+      case 6:{sCampoOrdBy="telefono";}break;
+      case 7:{sCampoOrdBy="comentario";}break;
+      case 8:{sCampoOrdBy="piezas";}break;
+      case 9:{sCampoOrdBy="soltero";}break;
+      case 10:{sCampoOrdBy="auto";}break;
+      case 11:{sCampoOrdBy="id_ciudad";}break;
+      case 12:{sCampoOrdBy="fecha";}break;
+      case 13:{sCampoOrdBy="fecha_pago";}break;
+      case 14:{sCampoOrdBy="color";}break;
+      case 15:{sCampoOrdBy="precio";}break;
+      case 16:{sCampoOrdBy="moneda";}break;
+      case 17:{sCampoOrdBy="id_deporte";}break;
+      case 18:{sCampoOrdBy="fecha_contratacion";}break;
+      case 19:{sCampoOrdBy="id_empresa";}break;
+      case 20:{sCampoOrdBy="fechainsercion";}break;
+      case 21:{sCampoOrdBy="fechaactualizacion";}break;
+      case 22:{sCampoOrdBy="fechaeliminacion";}break;
+      case 23:{sCampoOrdBy="registrovisible";}break;
+    }
+    if(sCampoOrdBy.length() &gt; 0 && request.getParameter("o").equals("ASC") || request.getParameter("o").equals("DESC") && sSql_persona.lastIndexOf(" ORDER BY") == -1){
+      sSqlOrderBy += " ORDER BY " + sCampoOrdBy + " " + request.getParameter("o") ;
+    }
+  }
+}
+List listaPersona = getDatosPersona(sSqlOrderBy);
+Iterator itPersona = listaPersona.iterator();
+Persona oPersona;
+ if(itPersona.hasNext()){ %&gt;
+&lt;table border="1"&gt;
+  &lt;tr class="thLbl"&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(1,1,'dOrd')"&gt; Persona  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(1,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(2,1,'dOrd')"&gt; Nombre  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(2,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(3,1,'dOrd')"&gt; Clave  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(3,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(4,1,'dOrd')"&gt; Correo  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(4,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(5,1,'dOrd')"&gt; Numero  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(5,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(6,1,'dOrd')"&gt; Telefono  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(6,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(7,1,'dOrd')"&gt; Comentario  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(7,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(8,1,'dOrd')"&gt; Piezas  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(8,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(9,1,'dOrd')"&gt; Soltero  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(9,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(10,1,'dOrd')"&gt; Auto  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(10,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(11,1,'dOrd')"&gt; Ciudad  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(11,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(12,1,'dOrd')"&gt; Fecha  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(12,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(13,1,'dOrd')"&gt; Fecha pago  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(13,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(14,1,'dOrd')"&gt; Color  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(14,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(15,1,'dOrd')"&gt; Precio  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(15,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(16,1,'dOrd')"&gt; Moneda  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(16,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(17,1,'dOrd')"&gt; Deporte  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(17,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(18,1,'dOrd')"&gt; Fecha contratacion  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(18,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(19,1,'dOrd')"&gt; Empresa  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(19,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(20,1,'dOrd')"&gt; Fechainsercion  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(20,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(21,1,'dOrd')"&gt; Fechaactualizacion  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(21,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(22,1,'dOrd')"&gt; Fechaeliminacion  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(22,2,'dOrd')"&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;" onclick="Ordenar(23,1,'dOrd')"&gt; Registrovisible  &lt;img src="&lt;%= sUrlImgOrdDesc %&gt;" onclick="Ordenar(23,2,'dOrd')"&gt;&lt;/th&gt;
+  &lt;/tr&gt;
+&lt;% while(itPersona.hasNext()){ oPersona = (Persona) itPersona.next(); %&gt;
+  &lt;tr class="&lt;%= (iRen % 2 == 0 ? "trP" : "trI") %&gt;"&gt;
+        &lt;td&gt;&lt;%= oPersona.getIdpersona() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getNombre() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getClave() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getCorreo() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getNumero() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getTelefono() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getComentario() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getPiezas() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getSoltero() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getAuto() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getIdciudad() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getFecha() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getFechapago() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getColor() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getPrecio() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getMoneda() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getIddeporte() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getFechacontratacion() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getIdempresa() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getFechainsercion() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getFechaactualizacion() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getFechaeliminacion() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getRegistrovisible() %&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;% iRen++; } %&gt;
+&lt;/table&gt;
+&lt;% } else { %&gt;
+&lt;h1&gt;No Hay Datos&lt;/h1&gt;
+&lt;% } %&gt;
+</pre></body></html>

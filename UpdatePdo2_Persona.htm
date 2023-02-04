@@ -1,0 +1,36 @@
+<html><style> .nt{font-weight:bolder;font-size:x-large;color:yellow;background-color:#00008B} .cDte{background-color:#800000;color:yellow;font-size:large;font-weight:bolder} .cReq{color:red;font-size:large;font-weight:bolder} </style><body bgcolor="#D3D3D3"><h1>Update Pdo2 <span class="nt">Persona</span></h1><pre>&lt;?php
+ $iRegActualizados = 0;
+ try {
+  $dbh = new PDO("mysql:host=$dbHost;dbname=$dbBaseDatos",$dbUsrUpd,$dbPwdUpd);
+  if($dbh){
+    $sSql = "UPDATE <span class="nt">persona</span> SET nombre = :nombre, clave = :clave, correo = :correo, numero = :numero, telefono = :telefono, comentario = :comentario, piezas = :piezas, soltero = :soltero, auto = :auto, id_ciudad = :id_ciudad, fecha = :fecha, fecha_pago = :fecha_pago, color = :color, precio = :precio, moneda = :moneda, id_deporte = :id_deporte, fecha_contratacion = :fecha_contratacion, id_empresa = :id_empresa, fechainsercion = :fechainsercion, fechaactualizacion = :fechaactualizacion, fechaeliminacion = :fechaeliminacion, registrovisible = :registrovisible WHERE id_persona = ";
+    $sth = $dbh-&gt;prepare($sSql);
+    $sth->bindValue(":nombre", $_POST["nombre"]);
+    $sth->bindValue(":clave", $_POST["clave"]);
+    $sth->bindValue(":correo", $_POST["correo"]);
+    $sth->bindValue(":numero", $_POST["numero"]);
+    $sth->bindValue(":telefono", $_POST["telefono"]);
+    $sth->bindValue(":comentario", $_POST["comentario"]);
+    $sth->bindValue(":piezas", $_POST["piezas"]);
+    $sth->bindValue(":soltero", $_POST["soltero"]);
+    $sth->bindValue(":auto", $_POST["auto"]);
+    $sth->bindValue(":id_ciudad", $_POST["id_ciudad"]);
+    $sth->bindValue(":fecha", $_POST["fecha"]);
+    $sth->bindValue(":fecha_pago", $_POST["fecha_pago"]);
+    $sth->bindValue(":color", $_POST["color"]);
+    $sth->bindValue(":precio", $_POST["precio"]);
+    $sth->bindValue(":moneda", $_POST["moneda"]);
+    $sth->bindValue(":id_deporte", $_POST["id_deporte"]);
+    $sth->bindValue(":fecha_contratacion", $_POST["fecha_contratacion"]);
+    $sth->bindValue(":id_empresa", $_POST["id_empresa"]);
+    $sth->bindValue(":fechainsercion", $_POST["fechainsercion"]);
+    $sth->bindValue(":fechaactualizacion", $_POST["fechaactualizacion"]);
+    $sth->bindValue(":fechaeliminacion", $_POST["fechaeliminacion"]);
+    $sth->bindValue(":registrovisible", $_POST["registrovisible"]);
+
+    $sth->execute();
+    $iRegActualizados = $sth->rowCount();
+  }
+ }catch(PDOException $e){ $iRegActualizados = 0; }
+ echo $iRegActualizados;
+?&gt;

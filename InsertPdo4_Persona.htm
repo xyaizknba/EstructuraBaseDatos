@@ -1,0 +1,54 @@
+<html><style> .nt{font-weight:bolder;font-size:x-large;color:yellow;background-color:#00008B} .cDte{background-color:#800000;color:yellow;font-size:large;font-weight:bolder} .cReq{color:red;font-size:large;font-weight:bolder} </style><body bgcolor="#D3D3D3"><h1>INSERT Pdo4 <span class="nt">Persona</span></h1><pre>&lt;?php
+ $iRegInsertados = 0;
+ try {
+  $dbh = new PDO("mysql:host=$dbHost;dbname=$dbBaseDatos",$dbUsrIns,$dbPwdIns);
+  if($dbh){
+    $sSql = "INSERT INTO <span class="nt">persona</span>(nombre, clave, correo, numero, telefono, comentario, piezas, soltero, auto, id_ciudad, fecha, fecha_pago, color, precio, moneda, id_deporte, fecha_contratacion, id_empresa, fechainsercion, fechaactualizacion, fechaeliminacion, registrovisible) VALUES(:nombre, :clave, :correo, :numero, :telefono, :comentario, :piezas, :soltero, :auto, :id_ciudad, :fecha, :fecha_pago, :color, :precio, :moneda, :id_deporte, :fecha_contratacion, :id_empresa, :fechainsercion, :fechaactualizacion, :fechaeliminacion, :registrovisible)";
+    $sth = $dbh-&gt;prepare($sSql);
+
+    $iNumMaxCar_nombre = 100;  // Numero Maximo de Caracteres que se pueden Guardar
+    $sth->bindValue(":nombre", ( strlen($_POST["nombre"]) > 0 ? PrevenirSqlInjection(($_POST["nombre"] <= $iNumMaxCar_nombre ? substr($_POST["nombre"], 0, $iNumMaxCar_nombre) : $_POST["nombre"] )) : "") );
+
+
+    $iNumMaxCar_clave = 100;  // Numero Maximo de Caracteres que se pueden Guardar
+    $sth->bindValue(":clave", ( strlen($_POST["clave"]) > 0 ? PrevenirSqlInjection(($_POST["clave"] <= $iNumMaxCar_clave ? substr($_POST["clave"], 0, $iNumMaxCar_clave) : $_POST["clave"] )) : "") );
+
+
+    $iNumMaxCar_correo = 100;  // Numero Maximo de Caracteres que se pueden Guardar
+    $sth->bindValue(":correo", ( strlen($_POST["correo"]) > 0 ? PrevenirSqlInjection(($_POST["correo"] <= $iNumMaxCar_correo ? substr($_POST["correo"], 0, $iNumMaxCar_correo) : $_POST["correo"] )) : "") );
+
+    $sth->bindValue(":numero", ((strlen($_POST["numero"]) > 0 && is_numeric($_POST["numero"])) ? $_POST["numero"] : 0));
+
+    $iNumMaxCar_telefono = 100;  // Numero Maximo de Caracteres que se pueden Guardar
+    $sth->bindValue(":telefono", ( strlen($_POST["telefono"]) > 0 ? PrevenirSqlInjection(($_POST["telefono"] <= $iNumMaxCar_telefono ? substr($_POST["telefono"], 0, $iNumMaxCar_telefono) : $_POST["telefono"] )) : "") );
+
+
+    $iNumMaxCar_comentario = 655;  // Numero Maximo de Caracteres que se pueden Guardar
+    $sth->bindValue(":comentario", ( strlen($_POST["comentario"]) > 0 ? PrevenirSqlInjection(($_POST["comentario"] <= $iNumMaxCar_comentario ? substr($_POST["comentario"], 0, $iNumMaxCar_comentario) : $_POST["comentario"] )) : "") );
+
+    $sth->bindValue(":piezas", ((strlen($_POST["piezas"]) > 0 && is_numeric($_POST["piezas"])) ? $_POST["piezas"] : 0));
+    $sth->bindValue(":soltero", ((strlen($_POST["soltero"]) > 0 && is_numeric($_POST["soltero"])) ? $_POST["soltero"] : 0));
+    $sth->bindValue(":auto", ((strlen($_POST["auto"]) > 0 && is_numeric($_POST["auto"])) ? $_POST["auto"] : 0));
+    $sth->bindValue(":id_ciudad", ((strlen($_POST["id_ciudad"]) > 0 && is_numeric($_POST["id_ciudad"])) ? $_POST["id_ciudad"] : 0));
+    $sth->bindValue(":fecha", $_POST["fecha"]);
+    $sth->bindValue(":fecha_pago", $_POST["fecha_pago"]);
+
+    $iNumMaxCar_color = 10;  // Numero Maximo de Caracteres que se pueden Guardar
+    $sth->bindValue(":color", ( strlen($_POST["color"]) > 0 ? PrevenirSqlInjection(($_POST["color"] <= $iNumMaxCar_color ? substr($_POST["color"], 0, $iNumMaxCar_color) : $_POST["color"] )) : "") );
+
+    $sth->bindValue(":precio", ((strlen($_POST["precio"]) > 0 && is_numeric($_POST["precio"])) ? $_POST["precio"] : 0));
+    $sth->bindValue(":moneda", ((strlen($_POST["moneda"]) > 0 && is_numeric($_POST["moneda"])) ? $_POST["moneda"] : 0));
+    $sth->bindValue(":id_deporte", ((strlen($_POST["id_deporte"]) > 0 && is_numeric($_POST["id_deporte"])) ? $_POST["id_deporte"] : 0));
+    $sth->bindValue(":fecha_contratacion", $_POST["fecha_contratacion"]);
+    $sth->bindValue(":id_empresa", ((strlen($_POST["id_empresa"]) > 0 && is_numeric($_POST["id_empresa"])) ? $_POST["id_empresa"] : 0));
+    $sth->bindValue(":fechainsercion", $_POST["fechainsercion"]);
+    $sth->bindValue(":fechaactualizacion", $_POST["fechaactualizacion"]);
+    $sth->bindValue(":fechaeliminacion", $_POST["fechaeliminacion"]);
+    $sth->bindValue(":registrovisible", ((strlen($_POST["registrovisible"]) > 0 && is_numeric($_POST["registrovisible"])) ? $_POST["registrovisible"] : 0));
+
+    $sth->execute();
+    $iRegInsertados = $sth->rowCount();
+  }
+ }catch(PDOException $e){ $iRegInsertados = 0; }
+ echo $iRegInsertados;
+?&gt;

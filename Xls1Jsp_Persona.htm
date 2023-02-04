@@ -1,0 +1,146 @@
+<html><body bgcolor="#D3D3D3"><h1>XLS 1 Registro JSP Persona</h1><pre>&lt;%@ include file="consultas.jsp" %&gt;&lt;%@ include file="conexion.jsp" %&gt;&lt;%@ include file="modelo.jsp" %&gt;&lt;%@ page import="java.util.*,XXXX.*" %&gt;
+&lt;%@page import="jxl.format.Colour"%&gt;
+&lt;%@page import="jxl.CellFeatures"%&gt;
+&lt;%@page import="jxl.write.Label"%&gt;
+&lt;%@page import="jxl.write.WriteException"%&gt;
+&lt;%@page import="jxl.write.biff.RowsExceededException"%&gt;
+&lt;%@page import="jxl.write.WritableFont"%&gt;
+&lt;%@page import="jxl.format.VerticalAlignment"%&gt;
+&lt;%@page import="jxl.format.Alignment"%&gt;
+&lt;%@page import="jxl.write.WritableCellFormat"%&gt;
+&lt;%@ page language="java" contentType="application/vnd.ms-excel;" %&gt;&lt;%
+response.setHeader("Content-disposition", ("attachment; filename=Persona.xls"));
+response.setContentType("application/vnd.ms-excel");
+try {
+
+    ServletOutputStream outputStream = response.getOutputStream();
+    jxl.write.WritableWorkbook workbook = jxl.Workbook.createWorkbook(outputStream);
+    jxl.write.WritableSheet sheet = workbook.createSheet("Persona", 0);
+    WritableCellFormat celFmtDato, celFmtTbl, celFmtTh, celFmtNoDatos, celFmtTd, celFmtTdPar, celFmtTdInpar;
+    WritableFont fnTH, fnTdPar, fnTdInpar, fnNoDatos, fnNomTbl;
+
+    fnNomTbl = new WritableFont(WritableFont.ARIAL,15,WritableFont.BOLD);
+    fnNomTbl.setColour(Colour.YELLOW);
+
+    fnTH = new WritableFont(WritableFont.ARIAL,12,WritableFont.BOLD);
+    fnTH.setColour(Colour.YELLOW);
+
+    fnTdPar = new WritableFont(WritableFont.ARIAL,10,WritableFont.BOLD);
+    fnTdPar.setColour(Colour.BLACK);
+
+    fnTdInpar = new WritableFont(WritableFont.ARIAL,10,WritableFont.BOLD);
+    fnTdInpar.setColour(Colour.BLACK);
+
+    fnNoDatos = new WritableFont(WritableFont.ARIAL,25,WritableFont.BOLD);
+    fnNoDatos.setColour(Colour.RED);
+
+    celFmtTbl = new WritableCellFormat(fnNomTbl);
+    celFmtTbl.setBackground(Colour.LIGHT_GREEN);
+
+    celFmtTdPar = new WritableCellFormat(fnTdPar);
+    celFmtTdPar.setBackground(Colour.GREY_25_PERCENT);
+
+    celFmtTdInpar = new WritableCellFormat(fnTdInpar);
+    celFmtTdInpar.setBackground(Colour.LIGHT_GREEN);
+
+    celFmtNoDatos = new WritableCellFormat(fnNoDatos);
+    celFmtNoDatos.setAlignment(Alignment.CENTRE);
+    celFmtNoDatos.setVerticalAlignment(VerticalAlignment.CENTRE);
+
+    celFmtTh = new WritableCellFormat(fnTH);
+    celFmtTh.setAlignment(Alignment.LEFT);
+    celFmtTh.setVerticalAlignment(VerticalAlignment.CENTRE);
+    celFmtTh.setBackground(Colour.BROWN);
+
+    if((request.getParameter("id") != null && request.getParameter("id").length() &gt; 0)){
+        int iNumParamId = Numero(request.getParameter("id"));
+        if(iNumParamId &gt; 0){
+
+            String sSql = sSql_persona + " WHERE id_persona = " + iNumParamId;
+            java.util.List listaPersona = getDatosPersona(sSql);
+            java.util.Iterator itPersona = listaPersona.iterator();
+            if(itPersona.hasNext()){ Persona oPersona = (Persona) itPersona.next();
+
+                sheet.addCell(new Label(1, 0, "Datos Persona", celFmtTbl));
+
+                sheet.addCell(new Label(1, 2, "Persona", celFmtTh));
+                sheet.addCell(new Label(2, 2, oPersona.getIdpersona(),celFmtTdInpar));
+
+                sheet.addCell(new Label(1, 3, "Nombre", celFmtTh));
+                sheet.addCell(new Label(2, 3, oPersona.getNombre(),celFmtTdPar));
+
+                sheet.addCell(new Label(1, 4, "Clave", celFmtTh));
+                sheet.addCell(new Label(2, 4, oPersona.getClave(),celFmtTdInpar));
+
+                sheet.addCell(new Label(1, 5, "Correo", celFmtTh));
+                sheet.addCell(new Label(2, 5, oPersona.getCorreo(),celFmtTdPar));
+
+                sheet.addCell(new Label(1, 6, "Numero", celFmtTh));
+                sheet.addCell(new Label(2, 6, oPersona.getNumero(),celFmtTdInpar));
+
+                sheet.addCell(new Label(1, 7, "Telefono", celFmtTh));
+                sheet.addCell(new Label(2, 7, oPersona.getTelefono(),celFmtTdPar));
+
+                sheet.addCell(new Label(1, 8, "Comentario", celFmtTh));
+                sheet.addCell(new Label(2, 8, oPersona.getComentario(),celFmtTdInpar));
+
+                sheet.addCell(new Label(1, 9, "Piezas", celFmtTh));
+                sheet.addCell(new Label(2, 9, oPersona.getPiezas(),celFmtTdPar));
+
+                sheet.addCell(new Label(1, 10, "Soltero", celFmtTh));
+                sheet.addCell(new Label(2, 10, oPersona.getSoltero(),celFmtTdInpar));
+
+                sheet.addCell(new Label(1, 11, "Auto", celFmtTh));
+                sheet.addCell(new Label(2, 11, oPersona.getAuto(),celFmtTdPar));
+
+                sheet.addCell(new Label(1, 12, "Ciudad", celFmtTh));
+                sheet.addCell(new Label(2, 12, oPersona.getIdciudad(),celFmtTdInpar));
+
+                sheet.addCell(new Label(1, 13, "Fecha", celFmtTh));
+                sheet.addCell(new Label(2, 13, oPersona.getFecha(),celFmtTdPar));
+
+                sheet.addCell(new Label(1, 14, "Fecha pago", celFmtTh));
+                sheet.addCell(new Label(2, 14, oPersona.getFechapago(),celFmtTdInpar));
+
+                sheet.addCell(new Label(1, 15, "Color", celFmtTh));
+                sheet.addCell(new Label(2, 15, oPersona.getColor(),celFmtTdPar));
+
+                sheet.addCell(new Label(1, 16, "Precio", celFmtTh));
+                sheet.addCell(new Label(2, 16, oPersona.getPrecio(),celFmtTdInpar));
+
+                sheet.addCell(new Label(1, 17, "Moneda", celFmtTh));
+                sheet.addCell(new Label(2, 17, oPersona.getMoneda(),celFmtTdPar));
+
+                sheet.addCell(new Label(1, 18, "Deporte", celFmtTh));
+                sheet.addCell(new Label(2, 18, oPersona.getIddeporte(),celFmtTdInpar));
+
+                sheet.addCell(new Label(1, 19, "Fecha contratacion", celFmtTh));
+                sheet.addCell(new Label(2, 19, oPersona.getFechacontratacion(),celFmtTdPar));
+
+                sheet.addCell(new Label(1, 20, "Empresa", celFmtTh));
+                sheet.addCell(new Label(2, 20, oPersona.getIdempresa(),celFmtTdInpar));
+
+                sheet.addCell(new Label(1, 21, "Fechainsercion", celFmtTh));
+                sheet.addCell(new Label(2, 21, oPersona.getFechainsercion(),celFmtTdPar));
+
+                sheet.addCell(new Label(1, 22, "Fechaactualizacion", celFmtTh));
+                sheet.addCell(new Label(2, 22, oPersona.getFechaactualizacion(),celFmtTdInpar));
+
+                sheet.addCell(new Label(1, 23, "Fechaeliminacion", celFmtTh));
+                sheet.addCell(new Label(2, 23, oPersona.getFechaeliminacion(),celFmtTdPar));
+
+                sheet.addCell(new Label(1, 24, "Registrovisible", celFmtTh));
+                sheet.addCell(new Label(2, 24, oPersona.getRegistrovisible(),celFmtTdInpar));
+
+            } else { sheet.addCell(new Label(1, 2, sNoDat, celFmtNoDatos)); }
+        } else {
+            sheet.addCell(new Label(1, 2, sNoDat, celFmtNoDatos));
+        }
+    } else {
+        sheet.addCell(new Label(1, 2, sNoDat, celFmtNoDatos));
+}
+
+workbook.write(); workbook.close(); out.clear(); out = pageContext.pushBody();
+}catch (RowsExceededException e) {e.printStackTrace();} catch (WriteException e) { }
+%&gt;
+</pre></body></html>

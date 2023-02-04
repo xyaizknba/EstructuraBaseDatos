@@ -1,0 +1,155 @@
+<html><body bgcolor="#D3D3D3"><h1>Tabla PDF Jsp Persona 1 Registro</h1><pre>&lt;%@ include file="consultas.jsp" %&gt;&lt;%@ include file="conexion.jsp" %&gt;&lt;%@ include file="modelo.jsp" %&gt;&lt;%@ page import="java.util.*,java.sql.*,XXXX.*" %&gt;&lt;%@page import="java.io.*,com.lowagie.text.*,com.lowagie.text.pdf.*" %&gt;&lt;%
+response.setContentType( "application/pdf" );
+
+Document document = new Document();
+ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+PdfWriter.getInstance( document, buffer );
+document.open();
+
+Paragraph pNoHaydatos = new Paragraph("No Hay datos",FontFactory.getFont(FontFactory.COURIER, 40, Font.BOLD, new java.awt.Color(139, 0, 0)));
+pNoHaydatos.setAlignment(Element.ALIGN_CENTER);
+
+if((request.getParameter("id") != null && request.getParameter("id").length() &gt; 0)){
+    int iNumParamId = Numero(request.getParameter("id"));
+    if(iNumParamId &gt; 0){
+        String sTitTblPdf = "Datos Persona";
+        String sSql = sSql_persona + " WHERE id_persona = " + iNumParamId;
+        java.util.List listaPersona = getDatosPersona(sSql);
+        java.util.Iterator itPersona = listaPersona.iterator();
+        if(itPersona.hasNext()){ Persona oPersona = (Persona) itPersona.next();
+            java.awt.Color bgDatPar = new java.awt.Color(255, 255, 255); java.awt.Color bgDatInpar = new java.awt.Color(245, 245, 220);
+            PdfPTable tblDatos = new PdfPTable(new float[]{1,2}); tblDatos.setWidthPercentage(80);
+
+            Paragraph pTitulo = new Paragraph(sTitTblPdf,FontFactory.getFont(FontFactory.COURIER, 15, Font.BOLD, new java.awt.Color(0, 0, 0)));
+            PdfPCell cellTblTitulo = new PdfPCell(pTitulo);
+            cellTblTitulo.setColspan(2);
+            cellTblTitulo.setBackgroundColor(new java.awt.Color(255, 255, 224));
+            cellTblTitulo.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+            PdfPCell cellTblDatosR1C1 = new PdfPCell(new Paragraph("Persona"));
+            PdfPCell cellTblDatosR1C2 = new PdfPCell(new Paragraph(oPersona.getIdpersona()));
+            cellTblDatosR1C1.setBackgroundColor(bgDatPar); cellTblDatosR1C2.setBackgroundColor(bgDatPar);
+
+            PdfPCell cellTblDatosR2C1 = new PdfPCell(new Paragraph("Nombre"));
+            PdfPCell cellTblDatosR2C2 = new PdfPCell(new Paragraph(oPersona.getNombre()));
+            cellTblDatosR2C1.setBackgroundColor(bgDatInpar); cellTblDatosR2C2.setBackgroundColor(bgDatInpar);
+
+            PdfPCell cellTblDatosR3C1 = new PdfPCell(new Paragraph("Clave"));
+            PdfPCell cellTblDatosR3C2 = new PdfPCell(new Paragraph(oPersona.getClave()));
+            cellTblDatosR3C1.setBackgroundColor(bgDatPar); cellTblDatosR3C2.setBackgroundColor(bgDatPar);
+
+            PdfPCell cellTblDatosR4C1 = new PdfPCell(new Paragraph("Correo"));
+            PdfPCell cellTblDatosR4C2 = new PdfPCell(new Paragraph(oPersona.getCorreo()));
+            cellTblDatosR4C1.setBackgroundColor(bgDatInpar); cellTblDatosR4C2.setBackgroundColor(bgDatInpar);
+
+            PdfPCell cellTblDatosR5C1 = new PdfPCell(new Paragraph("Numero"));
+            PdfPCell cellTblDatosR5C2 = new PdfPCell(new Paragraph(oPersona.getNumero()));
+            cellTblDatosR5C1.setBackgroundColor(bgDatPar); cellTblDatosR5C2.setBackgroundColor(bgDatPar);
+
+            PdfPCell cellTblDatosR6C1 = new PdfPCell(new Paragraph("Telefono"));
+            PdfPCell cellTblDatosR6C2 = new PdfPCell(new Paragraph(oPersona.getTelefono()));
+            cellTblDatosR6C1.setBackgroundColor(bgDatInpar); cellTblDatosR6C2.setBackgroundColor(bgDatInpar);
+
+            PdfPCell cellTblDatosR7C1 = new PdfPCell(new Paragraph("Comentario"));
+            PdfPCell cellTblDatosR7C2 = new PdfPCell(new Paragraph(oPersona.getComentario()));
+            cellTblDatosR7C1.setBackgroundColor(bgDatPar); cellTblDatosR7C2.setBackgroundColor(bgDatPar);
+
+            PdfPCell cellTblDatosR8C1 = new PdfPCell(new Paragraph("Piezas"));
+            PdfPCell cellTblDatosR8C2 = new PdfPCell(new Paragraph(oPersona.getPiezas()));
+            cellTblDatosR8C1.setBackgroundColor(bgDatInpar); cellTblDatosR8C2.setBackgroundColor(bgDatInpar);
+
+            PdfPCell cellTblDatosR9C1 = new PdfPCell(new Paragraph("Soltero"));
+            PdfPCell cellTblDatosR9C2 = new PdfPCell(new Paragraph(oPersona.getSoltero()));
+            cellTblDatosR9C1.setBackgroundColor(bgDatPar); cellTblDatosR9C2.setBackgroundColor(bgDatPar);
+
+            PdfPCell cellTblDatosR10C1 = new PdfPCell(new Paragraph("Auto"));
+            PdfPCell cellTblDatosR10C2 = new PdfPCell(new Paragraph(oPersona.getAuto()));
+            cellTblDatosR10C1.setBackgroundColor(bgDatInpar); cellTblDatosR10C2.setBackgroundColor(bgDatInpar);
+
+            PdfPCell cellTblDatosR11C1 = new PdfPCell(new Paragraph("Ciudad"));
+            PdfPCell cellTblDatosR11C2 = new PdfPCell(new Paragraph(oPersona.getIdciudad()));
+            cellTblDatosR11C1.setBackgroundColor(bgDatPar); cellTblDatosR11C2.setBackgroundColor(bgDatPar);
+
+            PdfPCell cellTblDatosR12C1 = new PdfPCell(new Paragraph("Fecha"));
+            PdfPCell cellTblDatosR12C2 = new PdfPCell(new Paragraph(oPersona.getFecha()));
+            cellTblDatosR12C1.setBackgroundColor(bgDatInpar); cellTblDatosR12C2.setBackgroundColor(bgDatInpar);
+
+            PdfPCell cellTblDatosR13C1 = new PdfPCell(new Paragraph("Fecha pago"));
+            PdfPCell cellTblDatosR13C2 = new PdfPCell(new Paragraph(oPersona.getFechapago()));
+            cellTblDatosR13C1.setBackgroundColor(bgDatPar); cellTblDatosR13C2.setBackgroundColor(bgDatPar);
+
+            PdfPCell cellTblDatosR14C1 = new PdfPCell(new Paragraph("Color"));
+            PdfPCell cellTblDatosR14C2 = new PdfPCell(new Paragraph(oPersona.getColor()));
+            cellTblDatosR14C1.setBackgroundColor(bgDatInpar); cellTblDatosR14C2.setBackgroundColor(bgDatInpar);
+
+            PdfPCell cellTblDatosR15C1 = new PdfPCell(new Paragraph("Precio"));
+            PdfPCell cellTblDatosR15C2 = new PdfPCell(new Paragraph(oPersona.getPrecio()));
+            cellTblDatosR15C1.setBackgroundColor(bgDatPar); cellTblDatosR15C2.setBackgroundColor(bgDatPar);
+
+            PdfPCell cellTblDatosR16C1 = new PdfPCell(new Paragraph("Moneda"));
+            PdfPCell cellTblDatosR16C2 = new PdfPCell(new Paragraph(oPersona.getMoneda()));
+            cellTblDatosR16C1.setBackgroundColor(bgDatInpar); cellTblDatosR16C2.setBackgroundColor(bgDatInpar);
+
+            PdfPCell cellTblDatosR17C1 = new PdfPCell(new Paragraph("Deporte"));
+            PdfPCell cellTblDatosR17C2 = new PdfPCell(new Paragraph(oPersona.getIddeporte()));
+            cellTblDatosR17C1.setBackgroundColor(bgDatPar); cellTblDatosR17C2.setBackgroundColor(bgDatPar);
+
+            PdfPCell cellTblDatosR18C1 = new PdfPCell(new Paragraph("Fecha contratacion"));
+            PdfPCell cellTblDatosR18C2 = new PdfPCell(new Paragraph(oPersona.getFechacontratacion()));
+            cellTblDatosR18C1.setBackgroundColor(bgDatInpar); cellTblDatosR18C2.setBackgroundColor(bgDatInpar);
+
+            PdfPCell cellTblDatosR19C1 = new PdfPCell(new Paragraph("Empresa"));
+            PdfPCell cellTblDatosR19C2 = new PdfPCell(new Paragraph(oPersona.getIdempresa()));
+            cellTblDatosR19C1.setBackgroundColor(bgDatPar); cellTblDatosR19C2.setBackgroundColor(bgDatPar);
+
+            PdfPCell cellTblDatosR20C1 = new PdfPCell(new Paragraph("Fechainsercion"));
+            PdfPCell cellTblDatosR20C2 = new PdfPCell(new Paragraph(oPersona.getFechainsercion()));
+            cellTblDatosR20C1.setBackgroundColor(bgDatInpar); cellTblDatosR20C2.setBackgroundColor(bgDatInpar);
+
+            PdfPCell cellTblDatosR21C1 = new PdfPCell(new Paragraph("Fechaactualizacion"));
+            PdfPCell cellTblDatosR21C2 = new PdfPCell(new Paragraph(oPersona.getFechaactualizacion()));
+            cellTblDatosR21C1.setBackgroundColor(bgDatPar); cellTblDatosR21C2.setBackgroundColor(bgDatPar);
+
+            PdfPCell cellTblDatosR22C1 = new PdfPCell(new Paragraph("Fechaeliminacion"));
+            PdfPCell cellTblDatosR22C2 = new PdfPCell(new Paragraph(oPersona.getFechaeliminacion()));
+            cellTblDatosR22C1.setBackgroundColor(bgDatInpar); cellTblDatosR22C2.setBackgroundColor(bgDatInpar);
+
+            PdfPCell cellTblDatosR23C1 = new PdfPCell(new Paragraph("Registrovisible"));
+            PdfPCell cellTblDatosR23C2 = new PdfPCell(new Paragraph(oPersona.getRegistrovisible()));
+            cellTblDatosR23C1.setBackgroundColor(bgDatPar); cellTblDatosR23C2.setBackgroundColor(bgDatPar);
+
+            tblDatos.addCell(cellTblTitulo);
+            tblDatos.addCell(cellTblDatosR1C1); tblDatos.addCell(cellTblDatosR1C2);
+            tblDatos.addCell(cellTblDatosR2C1); tblDatos.addCell(cellTblDatosR2C2);
+            tblDatos.addCell(cellTblDatosR3C1); tblDatos.addCell(cellTblDatosR3C2);
+            tblDatos.addCell(cellTblDatosR4C1); tblDatos.addCell(cellTblDatosR4C2);
+            tblDatos.addCell(cellTblDatosR5C1); tblDatos.addCell(cellTblDatosR5C2);
+            tblDatos.addCell(cellTblDatosR6C1); tblDatos.addCell(cellTblDatosR6C2);
+            tblDatos.addCell(cellTblDatosR7C1); tblDatos.addCell(cellTblDatosR7C2);
+            tblDatos.addCell(cellTblDatosR8C1); tblDatos.addCell(cellTblDatosR8C2);
+            tblDatos.addCell(cellTblDatosR9C1); tblDatos.addCell(cellTblDatosR9C2);
+            tblDatos.addCell(cellTblDatosR10C1); tblDatos.addCell(cellTblDatosR10C2);
+            tblDatos.addCell(cellTblDatosR11C1); tblDatos.addCell(cellTblDatosR11C2);
+            tblDatos.addCell(cellTblDatosR12C1); tblDatos.addCell(cellTblDatosR12C2);
+            tblDatos.addCell(cellTblDatosR13C1); tblDatos.addCell(cellTblDatosR13C2);
+            tblDatos.addCell(cellTblDatosR14C1); tblDatos.addCell(cellTblDatosR14C2);
+            tblDatos.addCell(cellTblDatosR15C1); tblDatos.addCell(cellTblDatosR15C2);
+            tblDatos.addCell(cellTblDatosR16C1); tblDatos.addCell(cellTblDatosR16C2);
+            tblDatos.addCell(cellTblDatosR17C1); tblDatos.addCell(cellTblDatosR17C2);
+            tblDatos.addCell(cellTblDatosR18C1); tblDatos.addCell(cellTblDatosR18C2);
+            tblDatos.addCell(cellTblDatosR19C1); tblDatos.addCell(cellTblDatosR19C2);
+            tblDatos.addCell(cellTblDatosR20C1); tblDatos.addCell(cellTblDatosR20C2);
+            tblDatos.addCell(cellTblDatosR21C1); tblDatos.addCell(cellTblDatosR21C2);
+            tblDatos.addCell(cellTblDatosR22C1); tblDatos.addCell(cellTblDatosR22C2);
+            tblDatos.addCell(cellTblDatosR23C1); tblDatos.addCell(cellTblDatosR23C2);
+
+            document.add(tblDatos);
+        } else { document.add(pNoHaydatos); }
+    } else { document.add(pNoHaydatos); }
+} else { document.add(pNoHaydatos); }
+document.close();
+DataOutput output = new DataOutputStream( response.getOutputStream() );
+byte[] bytes = buffer.toByteArray();
+response.setContentLength(bytes.length);
+for( int i = 0; i &lt; bytes.length; i++ ){output.writeByte( bytes[i] );} %&gt;
+</pre></body></html>

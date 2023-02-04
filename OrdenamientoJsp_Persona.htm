@@ -1,0 +1,113 @@
+<html><head></head><body bgcolor="#D3D3D3"><h1>Ordenamiento Flechas Persona</h1><pre>&lt;%@ page errorPage="error.jsp" %&gt;
+&lt;%@ include file="conexion.jsp" %&gt;
+&lt;%@ include file="<a href="D:\xampp\htdocs\DbEstructura\ModeloJsp.htm"><b>modelo.jsp</b></a>" %&gt;
+&lt;%@ include file="consultas.jsp" %&gt;
+&lt;%@ page import="java.util.*,java.sql.*,XXXX.*" %&gt;
+&lt;%
+String rutaActual = request.getRequestURI().toString().trim();
+String sSqlOrderBy = sSql_persona;
+if((request.getParameter("c") != null && request.getParameter("c").length() &gt; 0) && (request.getParameter("o") != null && request.getParameter("o").length() &gt; 0)){
+  iNumCamOrd = Numero(request.getParameter("c"));
+  if(iNumCamOrd &gt; 0){
+    switch(iNumCamOrd){
+      case 1:{sCampoOrdBy="id_persona";}break;
+      case 2:{sCampoOrdBy="nombre";}break;
+      case 3:{sCampoOrdBy="clave";}break;
+      case 4:{sCampoOrdBy="correo";}break;
+      case 5:{sCampoOrdBy="numero";}break;
+      case 6:{sCampoOrdBy="telefono";}break;
+      case 7:{sCampoOrdBy="comentario";}break;
+      case 8:{sCampoOrdBy="piezas";}break;
+      case 9:{sCampoOrdBy="soltero";}break;
+      case 10:{sCampoOrdBy="auto";}break;
+      case 11:{sCampoOrdBy="id_ciudad";}break;
+      case 12:{sCampoOrdBy="fecha";}break;
+      case 13:{sCampoOrdBy="fecha_pago";}break;
+      case 14:{sCampoOrdBy="color";}break;
+      case 15:{sCampoOrdBy="precio";}break;
+      case 16:{sCampoOrdBy="moneda";}break;
+      case 17:{sCampoOrdBy="id_deporte";}break;
+      case 18:{sCampoOrdBy="fecha_contratacion";}break;
+      case 19:{sCampoOrdBy="id_empresa";}break;
+      case 20:{sCampoOrdBy="fechainsercion";}break;
+      case 21:{sCampoOrdBy="fechaactualizacion";}break;
+      case 22:{sCampoOrdBy="fechaeliminacion";}break;
+      case 23:{sCampoOrdBy="registrovisible";}break;
+    }
+    if(sCampoOrdBy.length() &gt; 0 && request.getParameter("o").equals("ASC") || request.getParameter("o").equals("DESC") && sSql_persona.lastIndexOf(" ORDER BY") == -1){
+      sSqlOrderBy += " ORDER BY " + sCampoOrdBy + " " + request.getParameter("o") ;
+    }
+  }
+}
+List listaPersona = getDatosPersona(sSqlOrderBy);
+Iterator itPersona = listaPersona.iterator();
+Persona oPersona;
+%&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;link rel="stylesheet" href="estilo.css" style="text/css" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div align="center"&gt;
+&lt;% if(itPersona.hasNext()){ %&gt;
+&lt;table border="1"&gt;
+  &lt;tr class="thLbl"&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=1&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Persona  &lt;a href="&lt;%= rutaActual %&gt;?c=1&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=2&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Nombre  &lt;a href="&lt;%= rutaActual %&gt;?c=2&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=3&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Clave  &lt;a href="&lt;%= rutaActual %&gt;?c=3&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=4&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Correo  &lt;a href="&lt;%= rutaActual %&gt;?c=4&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=5&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Numero  &lt;a href="&lt;%= rutaActual %&gt;?c=5&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=6&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Telefono  &lt;a href="&lt;%= rutaActual %&gt;?c=6&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=7&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Comentario  &lt;a href="&lt;%= rutaActual %&gt;?c=7&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=8&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Piezas  &lt;a href="&lt;%= rutaActual %&gt;?c=8&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=9&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Soltero  &lt;a href="&lt;%= rutaActual %&gt;?c=9&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=10&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Auto  &lt;a href="&lt;%= rutaActual %&gt;?c=10&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=11&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Ciudad  &lt;a href="&lt;%= rutaActual %&gt;?c=11&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=12&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Fecha  &lt;a href="&lt;%= rutaActual %&gt;?c=12&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=13&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Fecha pago  &lt;a href="&lt;%= rutaActual %&gt;?c=13&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=14&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Color  &lt;a href="&lt;%= rutaActual %&gt;?c=14&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=15&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Precio  &lt;a href="&lt;%= rutaActual %&gt;?c=15&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=16&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Moneda  &lt;a href="&lt;%= rutaActual %&gt;?c=16&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=17&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Deporte  &lt;a href="&lt;%= rutaActual %&gt;?c=17&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=18&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Fecha contratacion  &lt;a href="&lt;%= rutaActual %&gt;?c=18&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=19&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Empresa  &lt;a href="&lt;%= rutaActual %&gt;?c=19&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=20&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Fechainsercion  &lt;a href="&lt;%= rutaActual %&gt;?c=20&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=21&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Fechaactualizacion  &lt;a href="&lt;%= rutaActual %&gt;?c=21&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=22&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Fechaeliminacion  &lt;a href="&lt;%= rutaActual %&gt;?c=22&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+   &lt;th&gt;&lt;a href="&lt;%= rutaActual%&gt;?c=23&o=ASC"&gt;&lt;img src="&lt;%= sUrlImgOrdAsc %&gt;"&gt;&lt;/a&gt;  Registrovisible  &lt;a href="&lt;%= rutaActual %&gt;?c=23&o=DESC"&gt;&lt;img src="&lt;%= sUrlImgOrdDesc %&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+  &lt;/tr&gt;
+&lt;% while(itPersona.hasNext()){ oPersona = (Persona) itPersona.next(); %&gt;
+  &lt;tr class="&lt;%= (iRen % 2 == 0 ? "trP" : "trI") %&gt;"&gt;
+        &lt;td&gt;&lt;%= oPersona.getIdpersona() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getNombre() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getClave() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getCorreo() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getNumero() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getTelefono() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getComentario() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getPiezas() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getSoltero() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getAuto() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getIdciudad() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getFecha() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getFechapago() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getColor() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getPrecio() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getMoneda() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getIddeporte() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getFechacontratacion() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getIdempresa() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getFechainsercion() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getFechaactualizacion() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getFechaeliminacion() %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= oPersona.getRegistrovisible() %&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;% iRen++; } %&gt;
+&lt;/table&gt;
+&lt;% } else { %&gt;
+&lt;h1&gt;No Hay Datos&lt;/h1&gt;
+&lt;% } %&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></body></html>

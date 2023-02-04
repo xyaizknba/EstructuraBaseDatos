@@ -1,0 +1,283 @@
+<html><body bgcolor="#D3D3D3"><h1>Tabla PDF PhpPersona 1 Registro</h1><pre>&lt;?php
+error_reporting(0);
+include("../phplibs/fpdf17/fpdf.php");
+include("conexion.php");
+include("consultas.php");
+include("modelo.php");
+
+class PDF extends FPDF {
+
+  var $widths; var $aligns;
+  function Header(){
+   $this-&gt;SetAuthor("Armando Ramos M.");
+   $this-&gt;SetSubject("Persona");
+   $this-&gt;SetTitle("Persona");
+   $this-&gt;SetKeywords("Persona");
+   $this-&gt;SetTextColor(0,0,0);
+   $this-&gt;SetFont('Arial','',14);
+   //$this-&gt;Cell(150, 3 , "Persona",0,1,'C');
+   $this-&gt;Cell(277, 5 , "Persona",0,1,'C');
+   $this-&gt;Ln();
+  }
+  function CheckPageBreak($h){if($this-&gt;GetY()+$h&gt;$this-&gt;PageBreakTrigger) $this-&gt;AddPage($this-&gt;CurOrientation); }
+  function NbLines($w,$txt){
+    $cw=&$this-&gt;CurrentFont['cw'];
+    if($w==0) $w=$this-&gt;w-$this-&gt;rMargin-$this-&gt;x;
+    $wmax=($w-2*$this-&gt;cMargin)*1000/$this-&gt;FontSize;
+    $s=str_replace("\r",'',$txt);
+    $nb=strlen($s);
+    if($nb&gt;0 and $s[$nb-1]=="\n") $nb--;
+    $sep=-1; $i=0; $j=0; $l=0; $nl=1;
+    while($i&lt;$nb){
+     $c=$s[$i];
+     if($c=="\n"){ $i++; $sep=-1; $j=$i; $l=0; $nl++; continue; }
+     if($c==' ') $sep=$i;
+     $l+=$cw[$c];
+     if($l&gt;$wmax){if($sep==-1){ if($i==$j) $i++;} else $i=$sep+1; $sep=-1; $j=$i; $l=0; $nl++; }
+     else $i++;
+    }
+    return $nl;
+  }
+  function Footer(){
+   $this-&gt;AliasNbPages();
+   //$this-&gt;SetXY(180, 340);
+   $this-&gt;SetXY(300, 200);
+   $this-&gt;SetTextColor(0,0,0);
+   $this-&gt;Cell(20,5, ("Pagina: ". $this-&gt;PageNo().'/{nb}'  ),0,0,'L');
+  }
+}
+
+$iMargenLblCampo = 20;
+$iMargenDato = 71;
+$iTamLetraLblCampo = 14; $iAnchoLblCampo = 50;
+$iTamLetraDatos = 12;
+$iLtr_I_RGB_R = 0; $iLtr_I_RGB_G = 0;$iLtr_I_RGB_B = 0;
+$iFondo_I_RGB_R = 248; $iFondo_I_RGB_G = 248; $iFondo_I_RGB_B = 255;
+$iLtr_P_RGB_R = 0; $iLtr_P_RGB_G = 0; $iLtr_P_RGB_B = 0;
+$iFondo_P_RGB_R = 238; $iFondo_P_RGB_G = 232; $iFondo_P_RGB_B = 170;
+$iAlturaDatos = 10; $iAnchoDatos = 270;
+$iSepDato=1;
+$Horientacion = 1;
+switch($Horientacion){
+ case 1:{
+   $iPosY_IniTbl = 25;
+   $iPosY_FinTbl = 195;
+   $sHorientacion="L";
+ }break;
+ case 2:{
+  $iPosY_IniTbl = 15;
+  $iPosY_FinTbl = 335;
+  $sHorientacion="P";
+ }break;
+}
+
+$pdf=new PDF($sHorientacion,'mm','Legal');
+
+$pdf-&gt;AddPage();
+$pdf-&gt;SetFont('Arial','',8);
+$pdf-&gt;SetTextColor(0,0,0);
+
+$id=$_GET["id"];
+if(is_numeric($id) && $id > 0){
+  $sSql_persona_1 = $sSql_persona." WHERE id_persona = $id";
+  $row_persona_1 = ObtenerDatos($dbHost,$dbUsrSel,$dbPwdSel,$dbBaseDatos,$sSql_persona_1);
+  if(count($row_persona_1) &gt; 0){
+    $pdf-&gt;SetXY($iMargenLblCampo, 20 );
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Persona :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato , 20);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["id_persona"],false,"L",true);
+
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Nombre :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["nombre"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Clave :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["clave"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Correo :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["correo"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Numero :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["numero"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Telefono :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["telefono"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Comentario :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["comentario"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Piezas :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["piezas"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Soltero :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["soltero"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Auto :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["auto"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Ciudad :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["id_ciudad"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Fecha :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["fecha"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Fecha pago :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["fecha_pago"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Color :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["color"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Precio :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["precio"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Moneda :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["moneda"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Deporte :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["id_deporte"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Fecha contratacion :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["fecha_contratacion"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Empresa :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["id_empresa"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Fechainsercion :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["fechainsercion"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Fechaactualizacion :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["fechaactualizacion"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Fechaeliminacion :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_P_RGB_R, $iLtr_P_RGB_G, $iLtr_P_RGB_B); $pdf-&gt;SetFillColor($iFondo_P_RGB_R, $iFondo_P_RGB_G, $iFondo_P_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["fechaeliminacion"],false,"L",true);
+    $iSigDato = $pdf-&gt;GetY() + $iSepDato;
+    $pdf-&gt;SetXY($iMargenLblCampo,  $iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraLblCampo); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoLblCampo, $iAlturaDatos,"Registrovisible :",false,"L",true);
+
+    $pdf-&gt;SetXY($iMargenDato ,$iSigDato);
+    $pdf-&gt;SetFontSize($iTamLetraDatos); $pdf-&gt;SetTextColor($iLtr_I_RGB_R, $iLtr_I_RGB_G, $iLtr_I_RGB_B); $pdf-&gt;SetFillColor($iFondo_I_RGB_R, $iFondo_I_RGB_G, $iFondo_I_RGB_B);
+    $pdf-&gt;MultiCell($iAnchoDatos, $iAlturaDatos ,$row_persona_1[0]["registrovisible"],false,"L",true);
+  } else {
+    $pdf-&gt;SetXY(50,  50);
+    $pdf-&gt;SetFontSize(50); $pdf-&gt;SetTextColor(255, 0, 0); $pdf-&gt;SetFillColor(255, 255, 255);
+    $pdf-&gt;MultiCell(200, 40,$sNoDat,false,"C",true);
+
+  }
+} else {
+  $pdf-&gt;SetXY(50,  50);
+  $pdf-&gt;SetFontSize(50); $pdf-&gt;SetTextColor(255, 0, 0); $pdf-&gt;SetFillColor(255, 255, 255);
+  $pdf-&gt;MultiCell(200, 40,$sNoDat,false,"C",true);
+}
+    $pdf-&gt;SetTextColor(0,0,0);
+$pdf-&gt;Output();
+?&gt;
+</pre></body></html>

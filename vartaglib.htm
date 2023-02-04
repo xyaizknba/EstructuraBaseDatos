@@ -1,0 +1,18 @@
+<html><body bgcolor="#D3D3D3"><h4>Variables - JSTL</h4><pre>&lt;c:set var="rutaActual" value="${pageContext.request.requestURL}" scope="page" /&gt;
+&lt;c:set var="sUrlImgOrdAsc" value="asc.jpg" scope="page" /&gt;
+&lt;c:set var="sUrlImgOrdDesc" value="desc.jpg" scope="page" /&gt;
+&lt;c:set var="sCampoOrdBy" value="" scope="page" /&gt;
+&lt;c:set var="iNumeroPaginacion" value="0" scope="page" /&gt;
+&lt;c:set var="numRegVer" value="200" scope="page" /&gt;
+&lt;c:set var="sNumRegVer" value="Numero de Registros a Ver" scope="page" /&gt;
+&lt;c:set var="sOrdenarPor" value="Ordenar Por" scope="page" /&gt;
+&lt;c:set var="sNoDat" value="No Hay Datos" scope="page" /&gt;
+&lt;c:set var="sBtnOrdenar" value="Ordenar" scope="page" /&gt;
+&lt;c:set var="iNumVerRegOrg" value="200" scope="page" /&gt;
+&lt;c:set var="sOrderBy" value="${fn:split('ASC,DESC',',')}" /&gt;
+&lt;c:set var="sOrderByLbl" value="${fn:split('Ascendente,Descendente',',')}" /&gt;
+
+&lt;c:set var="aLblCam_persona" value="${fn:split('Persona,Nombre,Clave,Correo,Numero,Telefono,Comentario,Piezas,Soltero,Auto,Ciudad,Fecha,Fecha pago,Color,Precio,Moneda,Deporte,Fecha contratacion,Empresa,Fechainsercion,Fechaactualizacion,Fechaeliminacion,Registrovisible',',')}" /&gt;
+&lt;c:set var="aNomCampos_persona" value="${fn:split('id_persona,nombre,clave,correo,numero,telefono,comentario,piezas,soltero,auto,id_ciudad,fecha,fecha_pago,color,precio,moneda,id_deporte,fecha_contratacion,id_empresa,fechainsercion,fechaactualizacion,fechaeliminacion,registrovisible',',')}" /&gt;
+
+</pre></body></html>

@@ -1,0 +1,106 @@
+<html><body bgcolor="#D3D3D3"><h1>Ordenamiento Flechas Persona</h1><pre>&lt;?php
+ error_reporting(0);
+ include("consultas.php");
+ include("conexion.php");
+ include("modelo.php");
+ if(isset($_GET["c"]) && strlen($_GET["c"]) > 0 && is_numeric($_GET["c"])){
+   switch(intval($_GET["c"])){
+     case 1:{$sCampoOrdBy="id_persona";}break;
+     case 2:{$sCampoOrdBy="nombre";}break;
+     case 3:{$sCampoOrdBy="clave";}break;
+     case 4:{$sCampoOrdBy="correo";}break;
+     case 5:{$sCampoOrdBy="numero";}break;
+     case 6:{$sCampoOrdBy="telefono";}break;
+     case 7:{$sCampoOrdBy="comentario";}break;
+     case 8:{$sCampoOrdBy="piezas";}break;
+     case 9:{$sCampoOrdBy="soltero";}break;
+     case 10:{$sCampoOrdBy="auto";}break;
+     case 11:{$sCampoOrdBy="id_ciudad";}break;
+     case 12:{$sCampoOrdBy="fecha";}break;
+     case 13:{$sCampoOrdBy="fecha_pago";}break;
+     case 14:{$sCampoOrdBy="color";}break;
+     case 15:{$sCampoOrdBy="precio";}break;
+     case 16:{$sCampoOrdBy="moneda";}break;
+     case 17:{$sCampoOrdBy="id_deporte";}break;
+     case 18:{$sCampoOrdBy="fecha_contratacion";}break;
+     case 19:{$sCampoOrdBy="id_empresa";}break;
+     case 20:{$sCampoOrdBy="fechainsercion";}break;
+     case 21:{$sCampoOrdBy="fechaactualizacion";}break;
+     case 22:{$sCampoOrdBy="fechaeliminacion";}break;
+     case 23:{$sCampoOrdBy="registrovisible";}break;
+   }
+ }
+ if(strlen($sCampoOrdBy)&gt;0 && ($_GET["o"] == "ASC" || $_GET["o"] == "DESC")){
+   $sSql_persona.=" ORDER BY ".$sCampoOrdBy." ".$_GET["o"]." LIMIT 200";
+ }
+ $aDatos_persona = ObtenerDatos($dbHost,$dbUsrSel,$dbPwdSel,$dbBaseDatos,$sSql_persona);
+?&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;link rel="stylesheet" href="estilo.css" style="text/css" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div align="center"&gt;
+  &lt;?php if(count($aDatos_persona)&gt;0){ ?&gt;
+   &lt;table border="1" width="100%"&gt;
+    &lt;tr class="thLbl"&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=1&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Persona&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=1&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=2&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Nombre&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=2&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=3&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Clave&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=3&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=4&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Correo&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=4&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=5&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Numero&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=5&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=6&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Telefono&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=6&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=7&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Comentario&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=7&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=8&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Piezas&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=8&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=9&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Soltero&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=9&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=10&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Auto&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=10&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=11&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Ciudad&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=11&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=12&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Fecha&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=12&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=13&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Fecha pago&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=13&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=14&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Color&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=14&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=15&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Precio&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=15&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=16&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Moneda&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=16&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=17&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Deporte&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=17&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=18&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Fecha contratacion&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=18&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=19&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Empresa&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=19&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=20&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Fechainsercion&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=20&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=21&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Fechaactualizacion&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=21&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=22&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Fechaeliminacion&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=22&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+       &lt;th&gt;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=23&o=ASC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdAsc; ?&gt;"&gt;&lt;/a&gt;&nbsp;&nbsp;Registrovisible&nbsp;&nbsp;&lt;a href="&lt;?php echo $rutaActual;?&gt;?c=23&o=DESC"&gt;&lt;img src="&lt;?php echo $sUrlImgOrdDesc; ?&gt;"&gt;&lt;/a&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;?php foreach($aDatos_persona as $reg): ?&gt;
+     &lt;tr class="&lt;?php echo ($iRen % 2 == 0 ? "trP" : "trI"); ?&gt;"&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["id_persona"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $reg["nombre"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $reg["clave"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $reg["correo"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["numero"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $reg["telefono"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $reg["comentario"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["piezas"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["soltero"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["auto"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["id_ciudad"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["fecha"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["fecha_pago"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $reg["color"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["precio"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["moneda"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["id_deporte"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["fecha_contratacion"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["id_empresa"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["fechainsercion"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["fechaactualizacion"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["fechaeliminacion"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["registrovisible"];?&gt;&lt;/td&gt;
+     &lt;/tr&gt;
+    &lt;?php $iRen++; endforeach; ?&gt;
+    &lt;/table&gt;
+  &lt;?php } else { ?&gt;
+    &lt;h1&gt;No Hay datos&lt;/h1&gt;
+  &lt;?php } ?&gt;
+
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></body></html>

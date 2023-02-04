@@ -1,0 +1,26 @@
+<html><style> .nt{font-weight:bolder;font-size:x-large;color:yellow;background-color:#00008B} .cDte{background-color:#800000;color:yellow;font-size:large;font-weight:bolder} .cReq{color:red;font-size:large;font-weight:bolder} </style><body bgcolor="#D3D3D3"><h1>UPDATE Java <span class="nt">Persona</span></h1><pre>    String sSql = "UPDATE <span class="nt">persona</span> SET (nombre = ?, clave = ?, correo = ?, numero = ?, telefono = ?, comentario = ?, piezas = ?, soltero = ?, auto = ?, id_ciudad = ?, fecha = ?, fecha_pago = ?, color = ?, precio = ?, moneda = ?, id_deporte = ?, fecha_contratacion = ?, id_empresa = ?, fechainsercion = ?, fechaactualizacion = ?, fechaeliminacion = ?, registrovisible = ?) WHERE id_persona = ";
+    java.sql.PreparedStatement preStat = dbConnection.prepareStatement(sSql);
+    preStat.setString(1, request.getParameter("nombre").trim().length() <= 100 ? ProtegerXSS(request.getParameter("nombre").trim()) : ProtegerXSS(request.getParameter("nombre").trim().substring(0,100)) );
+    preStat.setString(2, request.getParameter("clave").trim().length() <= 100 ? ProtegerXSS(request.getParameter("clave").trim()) : ProtegerXSS(request.getParameter("clave").trim().substring(0,100)) );
+    preStat.setString(3, request.getParameter("correo").trim().length() <= 100 ? sEmail(ProtegerXSS(request.getParameter("correo").trim())) : sEmail(ProtegerXSS(request.getParameter("correo").trim())).substring(0,100) );
+    preStat.setInt(4, Numero(request.getParameter("numero")) );
+    preStat.setString(5, request.getParameter("telefono").trim().length() <= 100 ? ProtegerXSS(request.getParameter("telefono").trim()) : ProtegerXSS(request.getParameter("telefono").trim().substring(0,100)) );
+    preStat.setString(6, request.getParameter("comentario").trim().length() <= 655 ? ProtegerXSS(request.getParameter("comentario").trim()) : ProtegerXSS(request.getParameter("comentario").trim().substring(0,655)) );
+    preStat.setInt(7, Numero(request.getParameter("piezas")) );
+    preStat.setInt(8, Numero(request.getParameter("soltero")) );
+    preStat.setInt(9, Numero(request.getParameter("auto")) );
+    preStat.setInt(10, Numero(request.getParameter("id_ciudad")) );
+    preStat.setString(11, request.getParameter("fecha") );
+    preStat.setString(12, request.getParameter("fecha_pago") );
+    preStat.setString(13, request.getParameter("color").trim().length() <= 10 ? ProtegerXSS(request.getParameter("color").trim()) : ProtegerXSS(request.getParameter("color").trim().substring(0,10)) );
+    preStat.setInt(14, Numero(request.getParameter("precio")) );
+    preStat.setFloat(15, Flotante(request.getParameter("moneda")) );
+    preStat.setInt(16, Numero(request.getParameter("id_deporte")) );
+    preStat.setString(17, request.getParameter("fecha_contratacion") );
+    preStat.setInt(18, Numero(request.getParameter("id_empresa")) );
+    preStat.setString(19, request.getParameter("fechainsercion") );
+    preStat.setString(20, request.getParameter("fechaactualizacion") );
+    preStat.setString(21, request.getParameter("fechaeliminacion") );
+    preStat.setInt(22, Numero(request.getParameter("registrovisible")) );
+
+     out.print((preStat.executeUpdate() == 1)?"Si":"No");

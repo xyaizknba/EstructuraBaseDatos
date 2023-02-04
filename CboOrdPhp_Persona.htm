@@ -1,0 +1,110 @@
+<html><head></head><body bgcolor="#D3D3D3"><h1>Ordenamiento PHP (Listas desplegables, Sin Js) Persona</h1><pre>&lt;?php
+ error_reporting(0);
+ include("consultas.php");
+ include("conexion.php");
+ include("modelo.php");
+ $aLblCam_persona = array("Persona","Nombre","Clave","Correo","Numero","Telefono","Comentario","Piezas","Soltero","Auto","Ciudad","Fecha","Fecha pago","Color","Precio","Moneda","Deporte","Fecha contratacion","Empresa","Fechainsercion","Fechaactualizacion","Fechaeliminacion","Registrovisible");
+ if($blnCamOrdSel){
+   switch(intval($_POST["cboCamp"])){
+     case 1:{$sCampoOrdBy="id_persona";}break;
+     case 2:{$sCampoOrdBy="nombre";}break;
+     case 3:{$sCampoOrdBy="clave";}break;
+     case 4:{$sCampoOrdBy="correo";}break;
+     case 5:{$sCampoOrdBy="numero";}break;
+     case 6:{$sCampoOrdBy="telefono";}break;
+     case 7:{$sCampoOrdBy="comentario";}break;
+     case 8:{$sCampoOrdBy="piezas";}break;
+     case 9:{$sCampoOrdBy="soltero";}break;
+     case 10:{$sCampoOrdBy="auto";}break;
+     case 11:{$sCampoOrdBy="id_ciudad";}break;
+     case 12:{$sCampoOrdBy="fecha";}break;
+     case 13:{$sCampoOrdBy="fecha_pago";}break;
+     case 14:{$sCampoOrdBy="color";}break;
+     case 15:{$sCampoOrdBy="precio";}break;
+     case 16:{$sCampoOrdBy="moneda";}break;
+     case 17:{$sCampoOrdBy="id_deporte";}break;
+     case 18:{$sCampoOrdBy="fecha_contratacion";}break;
+     case 19:{$sCampoOrdBy="id_empresa";}break;
+     case 20:{$sCampoOrdBy="fechainsercion";}break;
+     case 21:{$sCampoOrdBy="fechaactualizacion";}break;
+     case 22:{$sCampoOrdBy="fechaeliminacion";}break;
+     case 23:{$sCampoOrdBy="registrovisible";}break;
+   }
+   if(strlen($sCampoOrdBy)&gt;0){
+     $sSql_persona.=" ORDER BY ".$sCampoOrdBy." ".$_POST["cboOrd"]." LIMIT ".$iNumVerRegOrg;
+   }
+ }
+
+$aDatos_persona = ObtenerDatos($dbHost,$dbUsrSel,$dbPwdSel,$dbBaseDatos,$sSql_persona);
+?&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;link rel="stylesheet" href="estilo.css" style="text/css" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div align="center"&gt;
+  &lt;?php if(count($aDatos_persona)&gt;0){ ?&gt;
+  &lt;form method="post" action="&lt;?php echo $rutaActual;?&gt;"&gt;
+   &lt;table border="1"&gt;
+    &lt;tr class="thLbl"&gt;
+     &lt;?php for($i=0;$i&lt;count($aLblCam_persona);$i++) { ?&gt;
+      &lt;th&gt;&lt;?php echo $aLblCam_persona[$i];?&gt;&lt;/th&gt;
+     &lt;?php } ?&gt;
+    &lt;/tr&gt;
+    &lt;?php foreach($aDatos_persona as $reg): ?&gt;
+       &lt;tr class="&lt;?php echo ($iRen % 2 == 0 ? "trP" : "trI"); ?&gt;"&gt;
+
+        &lt;td align="center"&gt;&lt;?php echo $reg["id_persona"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $reg["nombre"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $reg["clave"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $reg["correo"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["numero"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $reg["telefono"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $reg["comentario"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["piezas"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["soltero"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["auto"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["id_ciudad"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["fecha"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["fecha_pago"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $reg["color"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["precio"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["moneda"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["id_deporte"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["fecha_contratacion"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["id_empresa"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["fechainsercion"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["fechaactualizacion"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["fechaeliminacion"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $reg["registrovisible"];?&gt;&lt;/td&gt;
+       &lt;/tr&gt;
+    &lt;?php $iRen++; endforeach; ?&gt;
+    &lt;tr align="center"&gt;
+     &lt;th colspan="23"&gt;
+       Numero de Registros a Ver: &lt;input type="number" name="txtNumRegVer" min="10" max="1000" size="4" maxlength="4" value="&lt;?php echo $iNumVerRegOrg ?&gt;"&gt;
+       Ordenar por :
+       &lt;select name="cboCamp"&gt;
+        &lt;option value=""&gt;&lt;/option&gt;
+        &lt;?php for($i=0;$i&lt;count($aLblCam_persona);$i++) {?&gt;
+        &lt;option value="&lt;?php echo ($i +1);?&gt;" &lt;?php echo ($blnCampOrdSel && $_POST["cboCamp"] == ($i +1) ? " selected":"") ?&gt;&gt;&lt;?php echo $aLblCam_persona[$i];?&gt;&lt;/option&gt;
+        &lt;?php } ?&gt;
+       &lt;/select&gt;
+       &lt;select name="cboOrd"&gt;
+        &lt;?php for($i=0;$i&lt;count($sOrdenBy );$i++) {?&gt;
+        &lt;option value="&lt;?php echo $sOrdenBy[$i];?&gt;" &lt;?php echo ($blnOrdBySel && $_POST["cboOrd"] == $sOrdenBy[$i] ? " selected":"") ?&gt;&gt;&lt;?php echo $sOrdenByLbl[$i];?&gt;&lt;/option&gt;
+        &lt;?php } ?&gt;
+       &lt;/select&gt;
+       &lt;input type="submit" value="Ordenar"&gt;
+     &lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;/table&gt;
+   &lt;/form&gt;
+  &lt;?php } else { ?&gt;
+    &lt;h1&gt;No Hay datos&lt;/h1&gt;
+  &lt;?php } ?&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></body></html>

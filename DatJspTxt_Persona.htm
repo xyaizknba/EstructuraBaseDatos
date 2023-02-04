@@ -1,0 +1,42 @@
+<html><body bgcolor="#D3D3D3"><h1>Tabla 1 Registro JSP (TXT)Persona</h1><pre>&lt;%@ page errorPage="error.jsp" %&gt;
+&lt;%@ include file="conexion.jsp" %&gt;
+&lt;%@ include file="<a href="D:\xampp\htdocs\DbEstructura\ModeloJsp.htm"><b>modelo.jsp</b></a>" %&gt;
+&lt;%@ include file="consultas.jsp" %&gt;
+&lt;%@ page import="java.util.*,java.sql.*,XXXX.*" %&gt;
+&lt;% response.setContentType("aplication/download"); response.setHeader("Content-Disposition","attachment;filename=persona.txt");
+if((request.getParameter("registro") != null && request.getParameter("registro").length() &gt; 0)){
+  int iNumParamId = Numero(request.getParameter("registro"));
+  String sSql = sSql_persona + " WHERE id_persona = " + iNumParamId;
+  if(iNumParamId &gt; 0 && sSql.length() &gt; 0){
+    List listaPersona = getDatosPersona(sSql);
+    Iterator itPersona = listaPersona.iterator();
+    if(itPersona.hasNext()){
+      Persona oPersona = (Persona) itPersona.next();
+      out.println("Persona :" + oPersona.getIdpersona());
+      out.println("Nombre :" + oPersona.getNombre());
+      out.println("Clave :" + oPersona.getClave());
+      out.println("Correo :" + oPersona.getCorreo());
+      out.println("Numero :" + oPersona.getNumero());
+      out.println("Telefono :" + oPersona.getTelefono());
+      out.println("Comentario :" + oPersona.getComentario());
+      out.println("Piezas :" + oPersona.getPiezas());
+      out.println("Soltero :" + oPersona.getSoltero());
+      out.println("Auto :" + oPersona.getAuto());
+      out.println("Ciudad :" + oPersona.getIdciudad());
+      out.println("Fecha :" + oPersona.getFecha());
+      out.println("Fecha pago :" + oPersona.getFechapago());
+      out.println("Color :" + oPersona.getColor());
+      out.println("Precio :" + oPersona.getPrecio());
+      out.println("Moneda :" + oPersona.getMoneda());
+      out.println("Deporte :" + oPersona.getIddeporte());
+      out.println("Fecha contratacion :" + oPersona.getFechacontratacion());
+      out.println("Empresa :" + oPersona.getIdempresa());
+      out.println("Fechainsercion :" + oPersona.getFechainsercion());
+      out.println("Fechaactualizacion :" + oPersona.getFechaactualizacion());
+      out.println("Fechaeliminacion :" + oPersona.getFechaeliminacion());
+      out.println("Registrovisible :" + oPersona.getRegistrovisible());
+    } else { out.println(sNoDat); }
+  } else { out.println(sNoDat); }
+} else { out.println(sNoDat); }
+%&gt;
+</pre></body></html>

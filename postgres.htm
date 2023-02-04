@@ -1,0 +1,72 @@
+<html><head><style> .nt{font-weight:bolder;font-size:x-large;color:yellow;background-color:#00008B} </style></head><body bgcolor="#D3D3D3"><h1>Select Postgres PHP</h1><h1>&lt;?php include("<a href="VarSql.htm">consultas.php</a>") ?&gt;</h1><pre>$dbConnection = pg_connect("host=localhost dbname=ejemplo user=root password=");
+<br><br><br>if($result_<b class="nt">persona</b> = pg_query($dbConnection,$sSql_persona)){
+  if(pg_num_rows($result_persona)&gt;0){ ?&gt;
+   &lt;table&gt;
+    &lt;tr class="thLbl"&gt;
+        &lt;th&gt;Persona&lt;/th&gt;
+        &lt;th&gt;Nombre&lt;/th&gt;
+        &lt;th&gt;Clave&lt;/th&gt;
+        &lt;th&gt;Correo&lt;/th&gt;
+        &lt;th&gt;Numero&lt;/th&gt;
+        &lt;th&gt;Telefono&lt;/th&gt;
+        &lt;th&gt;Comentario&lt;/th&gt;
+        &lt;th&gt;Piezas&lt;/th&gt;
+        &lt;th&gt;Soltero&lt;/th&gt;
+        &lt;th&gt;Auto&lt;/th&gt;
+        &lt;th&gt;Ciudad&lt;/th&gt;
+        &lt;th&gt;Fecha&lt;/th&gt;
+        &lt;th&gt;Fecha pago&lt;/th&gt;
+        &lt;th&gt;Color&lt;/th&gt;
+        &lt;th&gt;Precio&lt;/th&gt;
+        &lt;th&gt;Moneda&lt;/th&gt;
+        &lt;th&gt;Deporte&lt;/th&gt;
+        &lt;th&gt;Fecha contratacion&lt;/th&gt;
+        &lt;th&gt;Empresa&lt;/th&gt;
+        &lt;th&gt;Fechainsercion&lt;/th&gt;
+        &lt;th&gt;Fechaactualizacion&lt;/th&gt;
+        &lt;th&gt;Fechaeliminacion&lt;/th&gt;
+        &lt;th&gt;Registrovisible&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;?php
+     $iRen=1;
+     while($row_persona = pg_fetch_assoc($result_persona)){ ?&gt;
+       &lt;tr class="&lt;?php echo ($iRen % 2 == 0 ? "trP" : "trI");?&gt;"&gt;
+        &lt;td align="center"&gt;&lt;?php echo $row_persona["id_persona"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $row_persona["nombre"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $row_persona["clave"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $row_persona["correo"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $row_persona["numero"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $row_persona["telefono"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $row_persona["comentario"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $row_persona["piezas"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $row_persona["soltero"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $row_persona["auto"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $row_persona["id_ciudad"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $row_persona["fecha"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $row_persona["fecha_pago"];?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $row_persona["color"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $row_persona["precio"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $row_persona["moneda"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $row_persona["id_deporte"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $row_persona["fecha_contratacion"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $row_persona["id_empresa"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $row_persona["fechainsercion"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $row_persona["fechaactualizacion"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $row_persona["fechaeliminacion"];?&gt;&lt;/td&gt;
+        &lt;td align="center"&gt;&lt;?php echo $row_persona["registrovisible"];?&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;?php
+      $iRen++;
+     } ?&gt;
+   &lt;/table&gt;
+     &lt;?php } else { ?&gt;
+     &lt;h1&gt;No Hay datos&lt;/h1&gt;
+     &lt;?php
+   }
+   pg_free_result($result_persona);
+}
+pg_close($dbConnection);
+
+
+
+</pre></body></html>

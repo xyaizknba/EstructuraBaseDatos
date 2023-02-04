@@ -1,0 +1,430 @@
+<html><body><h1 align="center">Crear , Leer XML Persona</h1>
+<h3 align="center">URL</h3>
+<pre>
+&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
+&lt;?php
+header('Content-Type: text/xml charset=ISO-8859-1');
+include("conexion.php");
+include("consultas.php");
+include("modelo.php");
+
+$aDatos_persona = getDatos_BaseDatos($dbHost,$dbUsrSel,$dbPwdSel,$dbBaseDatos,$sSql_persona);
+if(count($aDatos_persona) &gt; 0){
+    echo "&lt;persona&gt;";
+    foreach($aDatos_persona as $reg):
+      echo "&lt;registro&gt;";
+        echo "&lt;id_persona&gt;".$reg["id_persona"]."&lt;/id_persona&gt;";
+        echo "&lt;nombre&gt;".$reg["nombre"]."&lt;/nombre&gt;";
+        echo "&lt;clave&gt;".$reg["clave"]."&lt;/clave&gt;";
+        echo "&lt;correo&gt;".$reg["correo"]."&lt;/correo&gt;";
+        echo "&lt;numero&gt;".$reg["numero"]."&lt;/numero&gt;";
+        echo "&lt;telefono&gt;".$reg["telefono"]."&lt;/telefono&gt;";
+        echo "&lt;comentario&gt;".$reg["comentario"]."&lt;/comentario&gt;";
+        echo "&lt;piezas&gt;".$reg["piezas"]."&lt;/piezas&gt;";
+        echo "&lt;soltero&gt;".$reg["soltero"]."&lt;/soltero&gt;";
+        echo "&lt;auto&gt;".$reg["auto"]."&lt;/auto&gt;";
+        echo "&lt;id_ciudad&gt;".$reg["id_ciudad"]."&lt;/id_ciudad&gt;";
+        echo "&lt;fecha&gt;".$reg["fecha"]."&lt;/fecha&gt;";
+        echo "&lt;fecha_pago&gt;".$reg["fecha_pago"]."&lt;/fecha_pago&gt;";
+        echo "&lt;color&gt;".$reg["color"]."&lt;/color&gt;";
+        echo "&lt;precio&gt;".$reg["precio"]."&lt;/precio&gt;";
+        echo "&lt;moneda&gt;".$reg["moneda"]."&lt;/moneda&gt;";
+        echo "&lt;id_deporte&gt;".$reg["id_deporte"]."&lt;/id_deporte&gt;";
+        echo "&lt;fecha_contratacion&gt;".$reg["fecha_contratacion"]."&lt;/fecha_contratacion&gt;";
+        echo "&lt;id_empresa&gt;".$reg["id_empresa"]."&lt;/id_empresa&gt;";
+        echo "&lt;fechainsercion&gt;".$reg["fechainsercion"]."&lt;/fechainsercion&gt;";
+        echo "&lt;fechaactualizacion&gt;".$reg["fechaactualizacion"]."&lt;/fechaactualizacion&gt;";
+        echo "&lt;fechaeliminacion&gt;".$reg["fechaeliminacion"]."&lt;/fechaeliminacion&gt;";
+        echo "&lt;registrovisible&gt;".$reg["registrovisible"]."&lt;/registrovisible&gt;";
+      echo "&lt;/registro&gt;";
+    endforeach;
+    echo "&lt;/persona&gt;";
+} else {
+}
+?&gt;
+</pre>
+<hr color="black">
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+.trI {color:red}
+.trP {color:blue}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;?php
+$iRen = 1;
+
+$persona = simplexml_load_file("http://localhost:8085/xml_persona.php");
+if(count($persona-&gt;registro) &gt; 0){ ?&gt;
+   &lt;table border="1"&gt;
+    &lt;tr&gt;
+        &lt;th&gt;Persona&lt;/th&gt;
+        &lt;th&gt;Nombre&lt;/th&gt;
+        &lt;th&gt;Clave&lt;/th&gt;
+        &lt;th&gt;Correo&lt;/th&gt;
+        &lt;th&gt;Numero&lt;/th&gt;
+        &lt;th&gt;Telefono&lt;/th&gt;
+        &lt;th&gt;Comentario&lt;/th&gt;
+        &lt;th&gt;Piezas&lt;/th&gt;
+        &lt;th&gt;Soltero&lt;/th&gt;
+        &lt;th&gt;Auto&lt;/th&gt;
+        &lt;th&gt;Ciudad&lt;/th&gt;
+        &lt;th&gt;Fecha&lt;/th&gt;
+        &lt;th&gt;Fecha pago&lt;/th&gt;
+        &lt;th&gt;Color&lt;/th&gt;
+        &lt;th&gt;Precio&lt;/th&gt;
+        &lt;th&gt;Moneda&lt;/th&gt;
+        &lt;th&gt;Deporte&lt;/th&gt;
+        &lt;th&gt;Fecha contratacion&lt;/th&gt;
+        &lt;th&gt;Empresa&lt;/th&gt;
+        &lt;th&gt;Fechainsercion&lt;/th&gt;
+        &lt;th&gt;Fechaactualizacion&lt;/th&gt;
+        &lt;th&gt;Fechaeliminacion&lt;/th&gt;
+        &lt;th&gt;Registrovisible&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;?php
+    foreach($persona-&gt;registro as $reg): ?&gt;
+     &lt;tr class="&lt;?php echo ($iRen % 2 == 0 ? "trP" : "trI"); ?&gt;"&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;id_persona; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo utf8_encode($reg-&gt;nombre); ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo utf8_encode($reg-&gt;clave); ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo utf8_encode($reg-&gt;correo); ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;numero; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo utf8_encode($reg-&gt;telefono); ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo utf8_encode($reg-&gt;comentario); ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;piezas; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;soltero; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;auto; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;id_ciudad; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;fecha; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;fecha_pago; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo utf8_encode($reg-&gt;color); ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;precio; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;moneda; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;id_deporte; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;fecha_contratacion; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;id_empresa; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;fechainsercion; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;fechaactualizacion; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;fechaeliminacion; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;registrovisible; ?&gt;&lt;/td&gt;
+     &lt;/tr&gt;
+    &lt;?php
+     $iRen++;
+    endforeach;
+    ?&gt;
+   &lt;/table&gt;
+&lt;?php
+} else { ?&gt;
+  &lt;h1&gt;No Hay Datos &lt;/h1&gt;
+&lt;?php
+}
+?&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><hr color="red"><h3 align="center">Archivo</h3><pre>
+&lt;?php
+include("conexion.php");
+include("consultas.php");
+include("modelo.php");
+$aDatos_persona = getDatos_BaseDatos($dbHost,$dbUsrSel,$dbPwdSel,$dbBaseDatos,$sSql_persona);
+if(count($aDatos_persona) &gt; 0){
+
+	$doc = new DOMDocument("1.0");
+
+	$doc-&gt;formatOutput = true;
+
+	$raiz = $doc-&gt;createElement("persona");
+	$raiz = $doc-&gt;appendChild($raiz);
+
+    foreach($aDatos_persona as $reg):
+
+      $registro = $doc-&gt;createElement("registro");
+      $registro = $raiz-&gt;appendChild($registro);
+      $id_persona = $doc-&gt;createElement("id_persona");
+      $id_persona = $registro-&gt;appendChild($id_persona);
+      $dato_id_persona = $doc-&gt;createTextNode($reg["id_persona"]);
+      $dato_id_persona = $id_persona-&gt;appendChild($dato_id_persona);
+
+      $nombre = $doc-&gt;createElement("nombre");
+      $nombre = $registro-&gt;appendChild($nombre);
+      $dato_nombre = $doc-&gt;createTextNode($reg["nombre"]);
+      $dato_nombre = $nombre-&gt;appendChild($dato_nombre);
+
+      $clave = $doc-&gt;createElement("clave");
+      $clave = $registro-&gt;appendChild($clave);
+      $dato_clave = $doc-&gt;createTextNode($reg["clave"]);
+      $dato_clave = $clave-&gt;appendChild($dato_clave);
+
+      $correo = $doc-&gt;createElement("correo");
+      $correo = $registro-&gt;appendChild($correo);
+      $dato_correo = $doc-&gt;createTextNode($reg["correo"]);
+      $dato_correo = $correo-&gt;appendChild($dato_correo);
+
+      $numero = $doc-&gt;createElement("numero");
+      $numero = $registro-&gt;appendChild($numero);
+      $dato_numero = $doc-&gt;createTextNode($reg["numero"]);
+      $dato_numero = $numero-&gt;appendChild($dato_numero);
+
+      $telefono = $doc-&gt;createElement("telefono");
+      $telefono = $registro-&gt;appendChild($telefono);
+      $dato_telefono = $doc-&gt;createTextNode($reg["telefono"]);
+      $dato_telefono = $telefono-&gt;appendChild($dato_telefono);
+
+      $comentario = $doc-&gt;createElement("comentario");
+      $comentario = $registro-&gt;appendChild($comentario);
+      $dato_comentario = $doc-&gt;createTextNode($reg["comentario"]);
+      $dato_comentario = $comentario-&gt;appendChild($dato_comentario);
+
+      $piezas = $doc-&gt;createElement("piezas");
+      $piezas = $registro-&gt;appendChild($piezas);
+      $dato_piezas = $doc-&gt;createTextNode($reg["piezas"]);
+      $dato_piezas = $piezas-&gt;appendChild($dato_piezas);
+
+      $soltero = $doc-&gt;createElement("soltero");
+      $soltero = $registro-&gt;appendChild($soltero);
+      $dato_soltero = $doc-&gt;createTextNode($reg["soltero"]);
+      $dato_soltero = $soltero-&gt;appendChild($dato_soltero);
+
+      $auto = $doc-&gt;createElement("auto");
+      $auto = $registro-&gt;appendChild($auto);
+      $dato_auto = $doc-&gt;createTextNode($reg["auto"]);
+      $dato_auto = $auto-&gt;appendChild($dato_auto);
+
+      $id_ciudad = $doc-&gt;createElement("id_ciudad");
+      $id_ciudad = $registro-&gt;appendChild($id_ciudad);
+      $dato_id_ciudad = $doc-&gt;createTextNode($reg["id_ciudad"]);
+      $dato_id_ciudad = $id_ciudad-&gt;appendChild($dato_id_ciudad);
+
+      $fecha = $doc-&gt;createElement("fecha");
+      $fecha = $registro-&gt;appendChild($fecha);
+      $dato_fecha = $doc-&gt;createTextNode($reg["fecha"]);
+      $dato_fecha = $fecha-&gt;appendChild($dato_fecha);
+
+      $fecha_pago = $doc-&gt;createElement("fecha_pago");
+      $fecha_pago = $registro-&gt;appendChild($fecha_pago);
+      $dato_fecha_pago = $doc-&gt;createTextNode($reg["fecha_pago"]);
+      $dato_fecha_pago = $fecha_pago-&gt;appendChild($dato_fecha_pago);
+
+      $color = $doc-&gt;createElement("color");
+      $color = $registro-&gt;appendChild($color);
+      $dato_color = $doc-&gt;createTextNode($reg["color"]);
+      $dato_color = $color-&gt;appendChild($dato_color);
+
+      $precio = $doc-&gt;createElement("precio");
+      $precio = $registro-&gt;appendChild($precio);
+      $dato_precio = $doc-&gt;createTextNode($reg["precio"]);
+      $dato_precio = $precio-&gt;appendChild($dato_precio);
+
+      $moneda = $doc-&gt;createElement("moneda");
+      $moneda = $registro-&gt;appendChild($moneda);
+      $dato_moneda = $doc-&gt;createTextNode($reg["moneda"]);
+      $dato_moneda = $moneda-&gt;appendChild($dato_moneda);
+
+      $id_deporte = $doc-&gt;createElement("id_deporte");
+      $id_deporte = $registro-&gt;appendChild($id_deporte);
+      $dato_id_deporte = $doc-&gt;createTextNode($reg["id_deporte"]);
+      $dato_id_deporte = $id_deporte-&gt;appendChild($dato_id_deporte);
+
+      $fecha_contratacion = $doc-&gt;createElement("fecha_contratacion");
+      $fecha_contratacion = $registro-&gt;appendChild($fecha_contratacion);
+      $dato_fecha_contratacion = $doc-&gt;createTextNode($reg["fecha_contratacion"]);
+      $dato_fecha_contratacion = $fecha_contratacion-&gt;appendChild($dato_fecha_contratacion);
+
+      $id_empresa = $doc-&gt;createElement("id_empresa");
+      $id_empresa = $registro-&gt;appendChild($id_empresa);
+      $dato_id_empresa = $doc-&gt;createTextNode($reg["id_empresa"]);
+      $dato_id_empresa = $id_empresa-&gt;appendChild($dato_id_empresa);
+
+      $fechainsercion = $doc-&gt;createElement("fechainsercion");
+      $fechainsercion = $registro-&gt;appendChild($fechainsercion);
+      $dato_fechainsercion = $doc-&gt;createTextNode($reg["fechainsercion"]);
+      $dato_fechainsercion = $fechainsercion-&gt;appendChild($dato_fechainsercion);
+
+      $fechaactualizacion = $doc-&gt;createElement("fechaactualizacion");
+      $fechaactualizacion = $registro-&gt;appendChild($fechaactualizacion);
+      $dato_fechaactualizacion = $doc-&gt;createTextNode($reg["fechaactualizacion"]);
+      $dato_fechaactualizacion = $fechaactualizacion-&gt;appendChild($dato_fechaactualizacion);
+
+      $fechaeliminacion = $doc-&gt;createElement("fechaeliminacion");
+      $fechaeliminacion = $registro-&gt;appendChild($fechaeliminacion);
+      $dato_fechaeliminacion = $doc-&gt;createTextNode($reg["fechaeliminacion"]);
+      $dato_fechaeliminacion = $fechaeliminacion-&gt;appendChild($dato_fechaeliminacion);
+
+      $registrovisible = $doc-&gt;createElement("registrovisible");
+      $registrovisible = $registro-&gt;appendChild($registrovisible);
+      $dato_registrovisible = $doc-&gt;createTextNode($reg["registrovisible"]);
+      $dato_registrovisible = $registrovisible-&gt;appendChild($dato_registrovisible);
+
+
+    endforeach;
+    $doc-&gt;save("C:\\wamp64\\www\\persona.xml") ;
+} else {
+}
+?&gt;
+
+</pre><hr color="black"><pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+.trI {color:red}
+.trP {color:blue}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;?php
+
+$RutaXml_persona = "C:\\wamp64\\www\\persona.xml";
+if(file_exists($RutaXml_persona)){
+    $iRen = 1;
+    $persona = simplexml_load_file($RutaXml_persona);
+    if(count($persona-&gt;registro) &gt; 0){ ?&gt;
+       &lt;table border="1"&gt;
+        &lt;tr&gt;
+        &lt;th&gt;Persona&lt;/th&gt;
+        &lt;th&gt;Nombre&lt;/th&gt;
+        &lt;th&gt;Clave&lt;/th&gt;
+        &lt;th&gt;Correo&lt;/th&gt;
+        &lt;th&gt;Numero&lt;/th&gt;
+        &lt;th&gt;Telefono&lt;/th&gt;
+        &lt;th&gt;Comentario&lt;/th&gt;
+        &lt;th&gt;Piezas&lt;/th&gt;
+        &lt;th&gt;Soltero&lt;/th&gt;
+        &lt;th&gt;Auto&lt;/th&gt;
+        &lt;th&gt;Ciudad&lt;/th&gt;
+        &lt;th&gt;Fecha&lt;/th&gt;
+        &lt;th&gt;Fecha pago&lt;/th&gt;
+        &lt;th&gt;Color&lt;/th&gt;
+        &lt;th&gt;Precio&lt;/th&gt;
+        &lt;th&gt;Moneda&lt;/th&gt;
+        &lt;th&gt;Deporte&lt;/th&gt;
+        &lt;th&gt;Fecha contratacion&lt;/th&gt;
+        &lt;th&gt;Empresa&lt;/th&gt;
+        &lt;th&gt;Fechainsercion&lt;/th&gt;
+        &lt;th&gt;Fechaactualizacion&lt;/th&gt;
+        &lt;th&gt;Fechaeliminacion&lt;/th&gt;
+        &lt;th&gt;Registrovisible&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;?php
+        foreach($persona-&gt;registro as $reg): ?&gt;
+         &lt;tr class="&lt;?php echo ($iRen % 2 == 0 ? "trP" : "trI"); ?&gt;"&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;id_persona; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo utf8_encode($reg-&gt;nombre); ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo utf8_encode($reg-&gt;clave); ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo utf8_encode($reg-&gt;correo); ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;numero; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo utf8_encode($reg-&gt;telefono); ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo utf8_encode($reg-&gt;comentario); ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;piezas; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;soltero; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;auto; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;id_ciudad; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;fecha; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;fecha_pago; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo utf8_encode($reg-&gt;color); ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;precio; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;moneda; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;id_deporte; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;fecha_contratacion; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;id_empresa; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;fechainsercion; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;fechaactualizacion; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;fechaeliminacion; ?&gt;&lt;/td&gt;
+       &lt;td&gt;&lt;?php echo $reg-&gt;registrovisible; ?&gt;&lt;/td&gt;
+         &lt;/tr&gt;
+        &lt;?php
+         $iRen++;
+        endforeach;
+        ?&gt;
+        &lt;/table&gt;
+    &lt;?php
+    } else { ?&gt;
+      &lt;h1&gt;No Hay Datos &lt;/h1&gt;
+    &lt;?php
+    }
+} else { ?&gt;
+ &lt;h1&gt;No existe el Archivo XML&lt;/h1&gt;
+&lt;?php
+}
+?&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+</pre><hr color="red"><h3 align="center">JavaScript</h3><pre>
+&lt;div id="tblXml"&gt;&lt;/div&gt;
+&lt;input type="button" id="cmdCargarDatosPersona" value="Cargar Datos Persona"&gt;
+
+
+&lt;script&gt;
+function CargarDatosPersona(){
+  var xhr=new XMLHttpRequest();
+  xhr.onreadystatechange=function(){
+   if(xhr.readyState==4 && xhr.status==200){
+    var i,docXML=xhr.responseXML,
+    registro=docXML.getElementsByTagName("registro"),
+    sTabla="&lt;div align=\"center\"&gt;&lt;table border=\"1\"&gt;&lt;tr&gt;&lt;th colspan=\"23\"&gt;Datos Persona&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;";
+    sTabla+="&lt;th&gt;Persona&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Nombre&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Clave&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Correo&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Numero&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Telefono&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Comentario&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Piezas&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Soltero&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Auto&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Ciudad&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Fecha&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Fecha pago&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Color&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Precio&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Moneda&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Deporte&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Fecha contratacion&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Empresa&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Fechainsercion&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Fechaactualizacion&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Fechaeliminacion&lt;/th&gt;";
+    sTabla+="&lt;th&gt;Registrovisible&lt;/th&gt;";
+    sTabla+="&lt;/tr&gt;";
+    for(i=0;i&lt;registro.length;i++){
+     sTabla+="&lt;tr class=\""+(i % 2 == 0 ? "trP" : "trI")+"\"&gt;";
+      sTabla+="&lt;td align=\"center\"&gt;"+ registro[i].getElementsByTagName("id_persona")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td&gt;"+ registro[i].getElementsByTagName("nombre")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td&gt;"+ registro[i].getElementsByTagName("clave")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td&gt;"+ registro[i].getElementsByTagName("correo")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td align=\"center\"&gt;"+ registro[i].getElementsByTagName("numero")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td&gt;"+ registro[i].getElementsByTagName("telefono")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td&gt;"+ registro[i].getElementsByTagName("comentario")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td align=\"center\"&gt;"+ registro[i].getElementsByTagName("piezas")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td align=\"center\"&gt;"+ registro[i].getElementsByTagName("soltero")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td align=\"center\"&gt;"+ registro[i].getElementsByTagName("auto")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td align=\"center\"&gt;"+ registro[i].getElementsByTagName("id_ciudad")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td align=\"center\"&gt;"+ registro[i].getElementsByTagName("fecha")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td align=\"center\"&gt;"+ registro[i].getElementsByTagName("fecha_pago")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td&gt;"+ registro[i].getElementsByTagName("color")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td align=\"center\"&gt;"+ registro[i].getElementsByTagName("precio")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td align=\"center\"&gt;"+ registro[i].getElementsByTagName("moneda")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td align=\"center\"&gt;"+ registro[i].getElementsByTagName("id_deporte")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td align=\"center\"&gt;"+ registro[i].getElementsByTagName("fecha_contratacion")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td align=\"center\"&gt;"+ registro[i].getElementsByTagName("id_empresa")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td align=\"center\"&gt;"+ registro[i].getElementsByTagName("fechainsercion")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td align=\"center\"&gt;"+ registro[i].getElementsByTagName("fechaactualizacion")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td align=\"center\"&gt;"+ registro[i].getElementsByTagName("fechaeliminacion")[0].textContent+"&lt;/td&gt;";
+      sTabla+="&lt;td align=\"center\"&gt;"+ registro[i].getElementsByTagName("registrovisible")[0].textContent+"&lt;/td&gt;";
+     sTabla+="&lt;/tr&gt;";
+    }
+    sTabla+="&lt;/table&gt;&lt;/div&gt;";
+    document.getElementById("tblXml").innerHTML=sTabla;
+   }
+  };
+  xhr.open("GET","persona.xml",true);
+  xhr.send();
+}
+
+document.getElementById("cmdCargarDatosPersona").addEventListener("click", CargarDatosPersona);
+&lt;/script&gt;
+</pre></body></html>

@@ -1,0 +1,129 @@
+<html><body bgcolor="#D3D3D3"><h1 align="center">modelo.php</h1><pre>&lt;?php
+
+$iRen=1; //Variable para Verificar si el Registro es Par o Inpar (Cambio de Estilo CSS)
+$rutaActual = htmlspecialchars($_SERVER["PHP_SELF"]);
+$sOrdenBy = array("ASC","DESC");
+$sNoDat = "No Hay Datos";
+$sOrdenByLbl = array("Ascendente","Descendente");
+$blnCampOrdSel = (isset($_POST["cboCamp"]) && strlen($_POST["cboCamp"]) &gt; 0 && is_numeric($_POST["cboCamp"]));
+$blnOrdBySel = (isset($_POST["cboOrd"]) && strlen($_POST["cboOrd"]) &gt; 0 && ($_POST["cboOrd"] == "ASC" || $_POST["cboOrd"] == "DESC"));
+$iNumVerRegOrg = (isset($_POST["txtNumRegVer"]) && ( strlen($_POST["txtNumRegVer"]) > 0 && strlen($_POST["txtNumRegVer"]) <= 4 ) && is_numeric($_POST["txtNumRegVer"]) && ($_POST["txtNumRegVer"] > 0 && $_POST["txtNumRegVer"] <= 1000 )) ? $_POST["txtNumRegVer"] : "200";
+$blnCamOrdSel = $blnCampOrdSel && $blnOrdBySel;
+$sCampoOrdBy=""; // Nombre campo para ordenar datos
+$sUrlImgOrdAsc="asc.jpg"; // Url imagen orden ASC
+$sUrlImgOrdDesc="desc.jpg"; // Url imagen DESC
+
+//// Pdf XLS Inicio ////
+$iRenDatXls = 4;
+$aAnchoColsXls = 30;
+
+$iAltoTitXls = 30;
+$iFntSizTitXls = 25;
+$ColFuenTitXls = "000000"; $ColFondTitXls = "EAEDED";
+
+$iFntSizLblCamXls = 15;
+$iAltoLblCamXls = 23;
+$ColFntLblColXls = "000000"; $ColFondLblCol = "A9CCE3";
+
+$sColDatXls = "#000000"; //Color Letra Datos
+$sColFonDatXlsPar = "E5E7E9"; $sColFonDatXlsInpar = "F7F9F9";
+//// Pdf XLS Fin ////
+
+function getDatos_BaseDatos($dbHost,$dbUsrSel,$dbPwdSel,$dbBaseDatos,$sSql){
+ $dbConnection = mysqli_connect($dbHost,$dbUsrSel,$dbPwdSel,$dbBaseDatos);
+ $dbResultSet = mysqli_query($dbConnection, $sSql );
+ $aDatos = array();
+ while($reg = mysqli_fetch_assoc($dbResultSet)){
+  $aDatos[] = $reg;
+ }
+ return $aDatos;
+}
+
+
+function ObtenerDatos($dbHost,$dbUsrSel,$dbPwdSel,$dbBaseDatos,$sSql){ // MySql
+ $aDatos = array();
+ if(strlen($sSql)&gt;0){
+   if($mysqli = new mysqli($dbHost,$dbUsrSel,$dbPwdSel,$dbBaseDatos)){
+     if($result = $mysqli-&gt;query($sSql)){
+      if($result-&gt;num_rows &gt; 0){
+        while($row = $result-&gt;fetch_assoc()){
+          $aDatos[] = $row;
+        }
+      }
+      $result-&gt;close();
+     }
+     $mysqli-&gt;close();
+   }
+ }
+ return $aDatos;
+}
+
+/*
+function ObtenerDatos($dbHost,$dbUsrSel,$dbPwdSel,$dbBaseDatos,$sSql){ // PostgreSQL
+ $aDatos = array();
+ if(strlen($sSql)&gt;0){
+   if($dbConnection = pg_connect("host=".$dbHost." dbname=".$dbBaseDatos." user=".$dbUsrSel." password=".$dbPwdSel)){
+     if($result = pg_query($dbConnection,$sSql)){
+      if(pg_num_rows($result)&gt;0){
+        while($row = pg_fetch_assoc($result)){
+          $aDatos[] = $row;
+        }
+      }
+      pg_free_result($result);
+     }
+     pg_close($dbConnection);
+   }
+ }
+ return $aDatos;
+}
+
+function ObtenerDatos($dbHost,$dbUsrSel,$dbPwdSel,$dbBaseDatos,$sSql){ // PDO MySql
+ $aDatos = array();
+ if(strlen($sSql)&gt;0){
+   try{
+    $dbh = new PDO("mysql:host=$dbHost;dbname=$dbBaseDatos",$dbUsrSel,$dbPwdSel);
+    $dbh-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    if($dbh){
+      if($sth = $dbh-&gt;query($sSql)){
+        if($sth-&gt;rowCount() &gt; 0){
+          while($row = $sth-&gt;fetch(PDO::FETCH_ASSOC)){
+            $aDatos[] = $row;
+          }
+        }
+        $sth-&gt;closeCursor();
+      }
+    }
+    $dbh = NULL;
+   }catch(PDOException $e){ }
+ }
+ return $aDatos;
+}
+
+function ObtenerDatos($dbHost,$dbUsrSel,$dbPwdSel,$dbBaseDatos,$sSql){ // PDO Postgres
+ $aDatos = array();
+ if(strlen($sSql)&gt;0){
+   try{
+    $dbh = new PDO("pgsql:dbname=$dbBaseDatos host=$dbHost", $dbUsrSel, $dbPwdSel);
+    $dbh-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    if($dbh){
+      if($sth = $dbh-&gt;query($sSql)){
+        if($sth-&gt;rowCount() &gt; 0){
+          while($row = $sth-&gt;fetch(PDO::FETCH_ASSOC)){
+            $aDatos[] = $row;
+          }
+        }
+        $sth-&gt;closeCursor();
+      }
+    }
+    $dbh = NULL;
+   }catch(PDOException $e){ }
+ }
+ return $aDatos;
+}
+
+*/
+?&gt;
+<br><br><br><br><br><br>/*
+$aDatos_persona = ObtenerDatos($dbHost,$dbUsrSel,$dbPwdSel,$dbBaseDatos,$sSql_persona);
+*/
+</pre></body></html>

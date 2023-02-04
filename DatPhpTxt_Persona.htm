@@ -1,0 +1,47 @@
+<html><head></head><body bgcolor="#D3D3D3"><h1>datos Txt Persona</h1><pre>&lt;?php
+error_reporting(0);
+include("conexion.php");
+include("modelo.php");
+include("consultas.php");
+
+$id=$_GET["id"];
+if(is_numeric($id) && $id &gt; 0){
+  header(("Content-disposition: attachment; filename=datos.txt"));
+  header("Content-Type: text/plain");
+  $sSql_persona_1 = $sSql_persona." WHERE id_persona = $id";
+  $aDatos_persona = ObtenerDatos($dbHost,$dbUsrSel,$dbPwdSel,$dbBaseDatos,$sSql_persona_1);
+
+  if(count($aDatos_persona) &gt; 0){ 
+    echo "Persona: ".$aDatos_persona[0]["id_persona"]."\r\n";
+    echo "Nombre: ".$aDatos_persona[0]["nombre"]."\r\n";
+    echo "Clave: ".$aDatos_persona[0]["clave"]."\r\n";
+    echo "Correo: ".$aDatos_persona[0]["correo"]."\r\n";
+    echo "Numero: ".$aDatos_persona[0]["numero"]."\r\n";
+    echo "Telefono: ".$aDatos_persona[0]["telefono"]."\r\n";
+    echo "Comentario: ".$aDatos_persona[0]["comentario"]."\r\n";
+    echo "Piezas: ".$aDatos_persona[0]["piezas"]."\r\n";
+    echo "Soltero: ".$aDatos_persona[0]["soltero"]."\r\n";
+    echo "Auto: ".$aDatos_persona[0]["auto"]."\r\n";
+    echo "Ciudad: ".$aDatos_persona[0]["id_ciudad"]."\r\n";
+    echo "Fecha: ".$aDatos_persona[0]["fecha"]."\r\n";
+    echo "Fecha pago: ".$aDatos_persona[0]["fecha_pago"]."\r\n";
+    echo "Color: ".$aDatos_persona[0]["color"]."\r\n";
+    echo "Precio: ".$aDatos_persona[0]["precio"]."\r\n";
+    echo "Moneda: ".$aDatos_persona[0]["moneda"]."\r\n";
+    echo "Deporte: ".$aDatos_persona[0]["id_deporte"]."\r\n";
+    echo "Fecha contratacion: ".$aDatos_persona[0]["fecha_contratacion"]."\r\n";
+    echo "Empresa: ".$aDatos_persona[0]["id_empresa"]."\r\n";
+    echo "Fechainsercion: ".$aDatos_persona[0]["fechainsercion"]."\r\n";
+    echo "Fechaactualizacion: ".$aDatos_persona[0]["fechaactualizacion"]."\r\n";
+    echo "Fechaeliminacion: ".$aDatos_persona[0]["fechaeliminacion"]."\r\n";
+    echo "Registrovisible: ".$aDatos_persona[0]["registrovisible"]."\r\n";
+  } else {
+     echo "No Hay Datos";
+  }
+} else {
+  header(("Content-disposition: attachment; filename=error.txt"));
+  header("Content-Type: text/plain");
+  echo "No Hay Datos";
+}
+?&gt;
+</pre></body></html>

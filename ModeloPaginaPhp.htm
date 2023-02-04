@@ -1,0 +1,12 @@
+<html><head><style> .nt{font-weight:bolder;font-size:x-large;color:yellow;background-color:#00008B} </style></head><body bgcolor="#D3D3D3"><h1>Leer Post PHP <b class="nt">ejemplo</b></h1><pre>&lt;?php error_reporting(0);
+include("config/conexion.php");
+$registros = ((isset($_GET["ver"]) && strlen($_GET["ver"]) &gt;0 && is_numeric($_GET["ver"]) && intval($_GET["ver"])&gt;0)? $_GET["ver"] : "50" );
+if(!isset($_GET['pag'])){$inicio = 0; $_GET['pag'] = 1;} else { $inicio = ($_GET['pag'] - 1) * $registros; }
+$sOrden=""; if(isset($_REQUEST["camp"]) && strlen($_REQUEST["camp"]) &gt; 0){$sOrden=" ORDER BY ".$_REQUEST["camp"]." ".$_REQUEST["ord"];}
+$sOrd = array("ASC","DESC");
+
+ $aNomCamposPersona = array("id_persona","nombre","clave","correo","numero","telefono","comentario","piezas","soltero","auto","id_ciudad","fecha","fecha_pago","color","precio","moneda","id_deporte","fecha_contratacion","id_empresa","fechainsercion","fechaactualizacion","fechaeliminacion","registrovisible");
+ $aLblCampPersona = array("Persona","Nombre","Clave","Correo","Numero","Telefono","Comentario","Piezas","Soltero","Auto","Ciudad","Fecha","Fecha pago","Color","Precio","Moneda","Deporte","Fecha contratacion","Empresa","Fechainsercion","Fechaactualizacion","Fechaeliminacion","Registrovisible");
+
+?&gt;
+</pre></body></html>

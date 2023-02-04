@@ -1,0 +1,180 @@
+<html><body bgcolor="#D3D3D3"><h1>XLS 1 Registro PHP Persona</h1><pre>&lt;?php
+include("conexion.php");
+include("consultas.php");
+include("modelo.php");
+require __DIR__ . "/vendor/autoload.php";
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+$spreadsheet = new Spreadsheet();
+$sheet = $spreadsheet-&gt;getActiveSheet();
+
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B2")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizTitXls);
+$spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("2")-&gt;setRowHeight($iAltoTitXls);
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('B2')-&gt;getAlignment()-&gt;setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('B2')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('B2')-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($ColFondTitXls);
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('B2')-&gt;getFont()-&gt;getColor()-&gt;setARGB($ColFuenTitXls);
+
+$sheet-&gt;mergeCells("B2:c2");
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("B")-&gt;setWidth($aAnchoColsXls);
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('B')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+$spreadsheet-&gt;getActiveSheet()-&gt;getColumnDimension("C")-&gt;setWidth($aAnchoColsXls);
+$spreadsheet-&gt;getActiveSheet()-&gt;getStyle('C')-&gt;getAlignment()-&gt;setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+$spreadsheet-&gt;getActiveSheet()-&gt;freezePane('A3');
+$id=$_GET["id"];
+if(is_numeric($id) && $id &gt; 0){
+  $sSql_persona_1 = $sSql_persona." WHERE id_persona = $id";
+  $row_persona_1 = ObtenerDatos($dbHost,$dbUsrSel,$dbPwdSel,$dbBaseDatos,$sSql_persona_1);
+  if(count($row_persona_1) &gt; 0){
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 3, "Persona");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 3, $row_persona_1[0]["id_persona"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C3")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C3")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("3")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 4, "Nombre");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 4, $row_persona_1[0]["nombre"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C4")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C4")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("4")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 5, "Clave");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 5, $row_persona_1[0]["clave"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C5")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C5")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("5")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 6, "Correo");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 6, $row_persona_1[0]["correo"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C6")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C6")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("6")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 7, "Numero");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 7, $row_persona_1[0]["numero"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C7")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C7")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("7")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 8, "Telefono");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 8, $row_persona_1[0]["telefono"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C8")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C8")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("8")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 9, "Comentario");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 9, $row_persona_1[0]["comentario"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C9")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C9")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("9")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 10, "Piezas");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 10, $row_persona_1[0]["piezas"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C10")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C10")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("10")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 11, "Soltero");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 11, $row_persona_1[0]["soltero"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C11")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C11")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("11")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 12, "Auto");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 12, $row_persona_1[0]["auto"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C12")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C12")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("12")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 13, "Ciudad");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 13, $row_persona_1[0]["id_ciudad"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C13")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C13")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("13")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 14, "Fecha");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 14, $row_persona_1[0]["fecha"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C14")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C14")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("14")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 15, "Fecha pago");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 15, $row_persona_1[0]["fecha_pago"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C15")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C15")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("15")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 16, "Color");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 16, $row_persona_1[0]["color"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C16")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C16")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("16")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 17, "Precio");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 17, $row_persona_1[0]["precio"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C17")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C17")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("17")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 18, "Moneda");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 18, $row_persona_1[0]["moneda"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C18")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C18")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("18")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 19, "Deporte");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 19, $row_persona_1[0]["id_deporte"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C19")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C19")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("19")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 20, "Fecha contratacion");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 20, $row_persona_1[0]["fecha_contratacion"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C20")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C20")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("20")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 21, "Empresa");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 21, $row_persona_1[0]["id_empresa"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C21")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C21")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("21")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 22, "Fechainsercion");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 22, $row_persona_1[0]["fechainsercion"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C22")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C22")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("22")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 23, "Fechaactualizacion");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 23, $row_persona_1[0]["fechaactualizacion"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C23")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C23")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("23")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 24, "Fechaeliminacion");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 24, $row_persona_1[0]["fechaeliminacion"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C24")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C24")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("24")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValueByColumnAndRow(2, 25, "Registrovisible");
+    $sheet-&gt;setCellValueByColumnAndRow(3, 25, $row_persona_1[0]["registrovisible"]);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C25")-&gt;getFont()-&gt;setBold(true)-&gt;setSize($iFntSizLblCamXls);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getStyle("B3:C25")-&gt;getFill()-&gt;setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)-&gt;getStartColor()-&gt;setARGB($sColFonDatXlsInpar);
+    $spreadsheet-&gt;getActiveSheet()-&gt;getRowDimension("25")-&gt;setRowHeight($iAltoLblCamXls);
+
+    $sheet-&gt;setCellValue("B2", "Datos Persona");
+  } else {
+    $sheet-&gt;setCellValue("B2", $sNoDat);
+  }
+} else {
+  $sheet-&gt;setCellValue("B2", $sNoDat);
+}
+$writer = new Xlsx($spreadsheet);
+$writer-&gt;save('DatosPersona.xlsx');
+header("Location: DatosPersona.xlsx");
+?&gt;
+</pre></body></html>

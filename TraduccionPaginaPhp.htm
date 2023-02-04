@@ -1,0 +1,89 @@
+<html><body bgcolor="#D3D3D3"><h1>traduction.php</h1><pre>
+&lt;?php
+
+ $lang = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2);
+
+ $mnuMainIndex = "Inicio";
+ $sPagNuReg = "Numero de Registros Visibles";
+ $sOrderBy = "Ordenar Por";
+ $cboShortFieldAsc = "Ascendente";
+ $cboShortFieldDesc = "Descendente";
+ $sTblNoReg = "No hay Datos";
+ $sOrdM = array($cboShortFieldAsc,$cboShortFieldDesc);
+ $cmdPagFirst = "Primer";
+ $cmdPagNext = "Siguiente";
+ $cmdPagPrevious = "Anterior";
+ $cmdPagLast = "Ultimo";
+
+if($lang == "en"){ // Ingles
+
+ $mnuMainIndex = "Home";
+ $sPagNuReg = "Number of Visible Records";
+ $sOrderBy = "Sort by";
+ $cboShortFieldAsc = "Upward";
+ $cboShortFieldDesc = "Falling";
+ $sTblNoReg = "There is no data"; 
+ $sOrdM = array("Upward","Falling");
+ $cmdPagFirst = "First";
+ $cmdPagNext = "Next";
+ $cmdPagPrevious = "Previous";
+ $cmdPagLast = "Last";
+
+} else if($lang == "it"){ // Italiano
+
+ $mnuMainIndex = "Inizio";
+ $sPagNuReg = "Numero di record visibili";
+ $sOrderBy = "Ordina per";
+ $cboShortFieldAsc = "Verso l'alto";
+ $cboShortFieldDesc = "Cadente";
+ $sTblNoReg = "Non ci sono dati"; 
+ $sOrdM = array("Verso l'alto","Cadente");
+ $cmdPagFirst = "Primo";
+ $cmdPagNext = "Seguente";
+ $cmdPagPrevious = "Precedente";
+ $cmdPagLast = "Più recente";
+
+} else if($lang == "pt"){ // Portugues
+
+ $mnuMainIndex = "Começar";
+ $sPagNuReg = "Número de registros visíveis";
+ $sOrderBy = "Organizar por";
+ $cboShortFieldAsc = "Para cima";
+ $cboShortFieldDesc = "Queda";
+ $sTblNoReg = "Não há dados"; 
+ $sOrdM = array("Para cima","Queda");
+ $cmdPagFirst = "Primeiro";
+ $cmdPagNext = "Segue";
+ $cmdPagPrevious = "Anterior";
+ $cmdPagLast = "Mais recente";
+
+} else if($lang == "fr"){ // Frances
+
+ $mnuMainIndex = "Début";
+ $sPagNuReg = "Nombre d'enregistrements visibles";
+ $sOrderBy = "Trier par";
+ $cboShortFieldAsc = "Vers le haut";
+ $cboShortFieldDesc = "Chute";
+ $sTblNoReg = "Il n'y a pas de données";
+ $sOrdM = array("Vers le haut","Chute");
+ $cmdPagFirst = "Première";
+ $cmdPagNext = "Suivant";
+ $cmdPagPrevious = "Précédent";
+ $cmdPagLast = "Dernier";
+
+} else if($lang == "de"){ // Aleman
+
+ $mnuMainIndex = "Start";
+ $sPagNuReg = "Anzahl der sichtbaren Datensätze";
+ $sOrderBy = "Sortieren nach";
+ $cboShortFieldAsc = "Nach oben";
+ $cboShortFieldDesc = "Fallen";
+ $sTblNoReg = "Keine Daten verfügbar";
+ $sOrdM = array("Nach oben","Fallen");
+ $cmdPagFirst = "Zuerst";
+ $cmdPagNext = "Folgend";
+ $cmdPagPrevious = "Bisherige";
+ $cmdPagLast = "Neueste";
+}
+?&gt;
+</pre></body></html>
